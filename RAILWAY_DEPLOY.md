@@ -12,12 +12,13 @@
 4. Railway will detect your repository
 
 ## Step 3: Configure Root Directory
-Since this is a monorepo, Railway needs to know where the API is:
+**IMPORTANT:** Railway needs to build from the root for monorepo:
 
 1. After the project is created, click on your service
 2. Go to **Settings** tab
 3. Scroll to **"Root Directory"**
-4. Set it to: `apps/api`
+4. **Leave it BLANK** or set to `/` (root)
+   - ⚠️ Do NOT set to `apps/api` - the monorepo needs root access
 5. Click **Save**
 
 ## Step 4: Set Environment Variables
