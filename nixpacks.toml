@@ -16,4 +16,4 @@ cmds = [
 ]
 
 [start]
-cmd = "cd apps/api && npm run start"
+cmd = "node apps/api/dist/index.js"
