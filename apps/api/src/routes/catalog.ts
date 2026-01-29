@@ -11,6 +11,31 @@ export const catalogRouter = Router();
 const prisma = new PrismaClient();
 
 /**
+ * GET /api/catalog/platforms
+ * Returns all active platforms.
+ */
+catalogRouter.get('/platforms', async (_req: Request, res: Response): Promise<void> => {
+  try {
+    const platforms = await prisma.platform.findMany({
+      where: { isActive: true },
+      orderBy: { createdAt: 'asc' },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        basePrice: true,
+        defaultAssetPath: true,
+      },
+    });
+    
+    res.json(platforms);
+  } catch (error) {
+    console.error('Error fetching platforms:', error);
+    res.status(500).json({ error: 'Failed to fetch platforms' });
+  }
+});
+
+/**
  * GET /api/catalog/platform
  * Returns the first active platform definition.
  */

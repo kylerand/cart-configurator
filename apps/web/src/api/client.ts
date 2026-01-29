@@ -28,6 +28,15 @@ export async function fetchPlatform(): Promise<Platform> {
 }
 
 /**
+ * Fetches all available platforms.
+ */
+export async function fetchAllPlatforms(): Promise<Platform[]> {
+  const response = await fetch(`${API_BASE}/catalog/platforms`);
+  if (!response.ok) throw new Error('Failed to fetch platforms');
+  return response.json();
+}
+
+/**
  * Fetches all available options.
  */
 export async function fetchOptions(): Promise<ConfigOption[]> {

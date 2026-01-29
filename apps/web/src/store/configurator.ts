@@ -42,6 +42,7 @@ interface ConfiguratorState {
   setOptions: (options: ConfigOption[]) => void;
   setMaterials: (materials: Material[]) => void;
   initializeConfiguration: (platformId: string) => void;
+  switchPlatform: (platform: Platform) => void;
   addOption: (optionId: OptionId) => boolean;
   removeOption: (optionId: OptionId) => boolean;
   setMaterialSelection: (selection: MaterialSelection) => void;
@@ -66,6 +67,16 @@ export const useConfiguratorStore = create<ConfiguratorState>((set, get) => ({
   initializeConfiguration: (platformId) => {
     const config = createConfiguration(platformId);
     set({ configuration: config });
+    get().recalculatePricing();
+  },
+
+  switchPlatform: (platform) => {
+    // Create new configuration for the new platform
+    const config = createConfiguration(platform.id);
+    set({ 
+      platform, 
+      configuration: config 
+    });
     get().recalculatePricing();
   },
 

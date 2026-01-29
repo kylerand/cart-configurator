@@ -10,6 +10,7 @@ import { CartScene } from '../three/scene/CartScene';
 import { OptionSelector } from '../components/OptionSelector';
 import { MaterialSelector } from '../components/MaterialSelector';
 import { PricingSummary } from '../components/PricingSummary';
+import { PlatformSelector } from '../components/PlatformSelector';
 import { useConfiguratorStore } from '../store/configurator';
 import { saveConfiguration } from '../api/client';
 
@@ -78,8 +79,11 @@ export function ConfiguratorPage() {
 
       {/* Main content */}
       <div style={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
-        {/* Left panel - Options/Materials toggle */}
+        {/* Left panel - Platform/Options/Materials */}
         <div style={{ width: '350px', borderRight: '1px solid #ccc', background: 'white', display: 'flex', flexDirection: 'column' }}>
+          {/* Platform selector at top */}
+          <PlatformSelector />
+          
           <div style={{ display: 'flex', borderBottom: '1px solid #ccc' }}>
             <button
               onClick={() => setActivePanel('options')}
