@@ -18,16 +18,16 @@
 
 ### Root Directory
 - **Framework:** Vite
-- **Root Directory:** Leave blank or set to `.` (root directory)
-  - **DO NOT set to `apps/web`** - monorepo needs root access
+- **Root Directory:** Set to `apps/web`
+- Click **"Continue"**
 
 ### Build Settings
-Vercel should auto-detect these, but **IMPORTANT - Override them**:
+The project includes a custom `build:full` script that handles the monorepo:
 - **Framework Preset:** Vite
-- **Root Directory:** Leave as `.` (root) - do NOT set to `apps/web`
-- **Build Command:** `npm install && npm run build:packages && cd apps/web && npm run build`
-- **Output Directory:** `apps/web/dist`
-- **Install Command:** `npm install`
+- **Root Directory:** `apps/web`
+- **Build Command:** `npm run build:full` (auto-detected from vercel.json)
+- **Output Directory:** `dist` (auto-detected)
+- **Install Command:** `cd ../.. && npm install` (auto-detected)
 
 ## Step 4: Environment Variables
 Before deploying, add these environment variables:
