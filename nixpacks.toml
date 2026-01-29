@@ -1,0 +1,19 @@
+# Railway Deployment Configuration
+
+# Nixpacks configuration for monorepo
+[phases.setup]
+nixPkgs = ["nodejs_18", "openssl"]
+
+[phases.install]
+cmds = [
+  "npm install",
+  "cd apps/api && npx prisma generate"
+]
+
+[phases.build]
+cmds = [
+  "cd apps/api && npm run build"
+]
+
+[start]
+cmd = "cd apps/api && npm run start"

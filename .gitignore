@@ -3,5 +3,9 @@ dist/
 *.log
 .DS_Store
 .env
+
+# Deployment credential files (never commit these)
+.env.railway
+.env.production
 *.db
 *.db-journal
