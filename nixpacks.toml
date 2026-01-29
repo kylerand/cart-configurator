@@ -5,7 +5,7 @@ nixPkgs = ["nodejs_18", "openssl"]
 
 [phases.install]
 cmds = [
-  "npm install --workspaces",
+  "npm ci --include-workspace-root",
   "npm run build:packages",
   "cd apps/api && npx prisma generate"
 ]
