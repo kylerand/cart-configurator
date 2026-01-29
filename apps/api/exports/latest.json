@@ -1,0 +1,255 @@
+{
+  "exportedAt": "2026-01-29T17:52:38.714Z",
+  "users": [
+    {
+      "id": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "email": "admin@golfcarts.com",
+      "passwordHash": "$2b$10$n5EArscErvcgYNxTs/vH2.sIs7TTHAp8wREHR3UxQZhkEkrVPAdEu",
+      "name": "Admin User",
+      "role": "SUPER_ADMIN",
+      "isActive": true,
+      "createdAt": "2026-01-29T15:55:29.761Z",
+      "updatedAt": "2026-01-29T17:35:55.601Z",
+      "lastLoginAt": "2026-01-29T17:35:55.600Z"
+    }
+  ],
+  "platforms": [
+    {
+      "id": "standard-4seat",
+      "name": "Standard 4-Seater",
+      "description": "Classic 4-passenger golf cart",
+      "basePrice": 8500,
+      "defaultAssetPath": "",
+      "isActive": true,
+      "specifications": "{\"maxPassengers\":4}",
+      "createdAt": "2026-01-29T16:15:09.040Z",
+      "updatedAt": "2026-01-29T16:15:09.040Z",
+      "createdBy": "24b831f8-fdc4-43b9-b84e-4120f6d35621"
+    }
+  ],
+  "options": [
+    {
+      "id": "roof-extended",
+      "platformId": "standard-4seat",
+      "category": "ROOF",
+      "name": "Extended Roof",
+      "description": "Full coverage extended roof",
+      "partPrice": 450,
+      "laborHours": 2.5,
+      "assetPath": "",
+      "isActive": true,
+      "specifications": "{}",
+      "createdAt": "2026-01-29T16:15:09.052Z",
+      "updatedAt": "2026-01-29T16:15:09.052Z",
+      "createdBy": "24b831f8-fdc4-43b9-b84e-4120f6d35621"
+    },
+    {
+      "id": "seats-premium",
+      "platformId": "standard-4seat",
+      "category": "SEATS",
+      "name": "Premium Seats",
+      "description": "Luxury vinyl seats",
+      "partPrice": 750,
+      "laborHours": 3,
+      "assetPath": "",
+      "isActive": true,
+      "specifications": "{}",
+      "createdAt": "2026-01-29T16:15:09.112Z",
+      "updatedAt": "2026-01-29T16:15:09.112Z",
+      "createdBy": "24b831f8-fdc4-43b9-b84e-4120f6d35621"
+    }
+  ],
+  "optionRelations": [
+    {
+      "id": "12f9f9ac-8ff2-42cf-903a-07317e3f65ac",
+      "optionId": "roof-extended",
+      "relatedId": "seats-premium",
+      "type": "REQUIRES",
+      "reason": "Extended roof requires upgraded seat height clearance",
+      "createdAt": "2026-01-29T16:15:09.123Z",
+      "createdBy": "24b831f8-fdc4-43b9-b84e-4120f6d35621"
+    }
+  ],
+  "materials": [
+    {
+      "id": "paint-red-gloss",
+      "zone": "BODY",
+      "type": "PAINT",
+      "name": "Gloss Red Paint",
+      "description": "High-gloss automotive red",
+      "color": "#FF0000",
+      "finish": "GLOSS",
+      "priceMultiplier": 1.15,
+      "isActive": true,
+      "specifications": "{}",
+      "createdAt": "2026-01-29T16:15:09.063Z",
+      "updatedAt": "2026-01-29T16:15:09.063Z",
+      "createdBy": "24b831f8-fdc4-43b9-b84e-4120f6d35621"
+    }
+  ],
+  "configurations": [],
+  "quotes": [],
+  "auditLogs": [
+    {
+      "id": "57f7342b-3c34-4408-bc70-3e00ebcd94a7",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T16:13:33.748Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "0cb82e10-73bc-413b-8191-f20fea58739b",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T16:13:47.585Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "6b2ff9a8-f0db-40cd-a61e-3e4135ae5da2",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T16:14:44.754Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "f9fc3ef9-fede-498e-9faf-c786101dde73",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T16:15:09.026Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "038f7c4e-17eb-4eb3-8aae-bed94ad7ef09",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "CREATE",
+      "entityType": "Platform",
+      "entityId": "standard-4seat",
+      "changes": "{\"id\":\"standard-4seat\",\"name\":\"Standard 4-Seater\",\"description\":\"Classic 4-passenger golf cart\",\"basePrice\":8500,\"defaultAssetPath\":\"\",\"isActive\":true,\"specifications\":\"{\\\"maxPassengers\\\":4}\",\"createdAt\":\"2026-01-29T16:15:09.040Z\",\"updatedAt\":\"2026-01-29T16:15:09.040Z\",\"createdBy\":\"24b831f8-fdc4-43b9-b84e-4120f6d35621\"}",
+      "timestamp": "2026-01-29T16:15:09.041Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "6bfc0d2e-14cd-499f-b834-d4a9b3960ea4",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "CREATE",
+      "entityType": "Option",
+      "entityId": "roof-extended",
+      "changes": "{\"id\":\"roof-extended\",\"platformId\":\"standard-4seat\",\"category\":\"ROOF\",\"name\":\"Extended Roof\",\"description\":\"Full coverage extended roof\",\"partPrice\":450,\"laborHours\":2.5,\"assetPath\":\"\",\"isActive\":true,\"specifications\":\"{}\",\"createdAt\":\"2026-01-29T16:15:09.052Z\",\"updatedAt\":\"2026-01-29T16:15:09.052Z\",\"createdBy\":\"24b831f8-fdc4-43b9-b84e-4120f6d35621\"}",
+      "timestamp": "2026-01-29T16:15:09.053Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "d9695020-4bfb-437f-98da-b1a34ea5f5c8",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "CREATE",
+      "entityType": "Material",
+      "entityId": "paint-red-gloss",
+      "changes": "{\"id\":\"paint-red-gloss\",\"zone\":\"BODY\",\"type\":\"PAINT\",\"name\":\"Gloss Red Paint\",\"description\":\"High-gloss automotive red\",\"color\":\"#FF0000\",\"finish\":\"GLOSS\",\"priceMultiplier\":1.15,\"isActive\":true,\"specifications\":\"{}\",\"createdAt\":\"2026-01-29T16:15:09.063Z\",\"updatedAt\":\"2026-01-29T16:15:09.063Z\",\"createdBy\":\"24b831f8-fdc4-43b9-b84e-4120f6d35621\"}",
+      "timestamp": "2026-01-29T16:15:09.063Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "c1292be2-cfd8-4c8e-a2c9-adcc37a773c3",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "CREATE",
+      "entityType": "Option",
+      "entityId": "seats-premium",
+      "changes": "{\"id\":\"seats-premium\",\"platformId\":\"standard-4seat\",\"category\":\"SEATS\",\"name\":\"Premium Seats\",\"description\":\"Luxury vinyl seats\",\"partPrice\":750,\"laborHours\":3,\"assetPath\":\"\",\"isActive\":true,\"specifications\":\"{}\",\"createdAt\":\"2026-01-29T16:15:09.112Z\",\"updatedAt\":\"2026-01-29T16:15:09.112Z\",\"createdBy\":\"24b831f8-fdc4-43b9-b84e-4120f6d35621\"}",
+      "timestamp": "2026-01-29T16:15:09.112Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "6cca72bd-9a8a-4de8-a4c0-365489e85167",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "CREATE",
+      "entityType": "OptionRelation",
+      "entityId": "12f9f9ac-8ff2-42cf-903a-07317e3f65ac",
+      "changes": "{\"id\":\"12f9f9ac-8ff2-42cf-903a-07317e3f65ac\",\"optionId\":\"roof-extended\",\"relatedId\":\"seats-premium\",\"type\":\"REQUIRES\",\"reason\":\"Extended roof requires upgraded seat height clearance\",\"createdAt\":\"2026-01-29T16:15:09.123Z\",\"createdBy\":\"24b831f8-fdc4-43b9-b84e-4120f6d35621\"}",
+      "timestamp": "2026-01-29T16:15:09.124Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "f425ec90-4241-471f-acb1-dd4a1d5ac8cc",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T16:52:22.841Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "102e11e4-cbd3-42ff-82b1-c620bed61717",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T16:54:55.680Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "edb5dbfc-3d0d-4f06-b9dc-163196c20031",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T16:58:15.352Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "a6542c36-25b6-4c05-bfea-d380d5aa6af8",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T17:00:21.084Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "a996eba8-b649-49d7-ac9d-6bc031670916",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T17:15:30.586Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "139da1f2-5bd5-4030-8398-205dc3e310be",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T17:27:18.607Z",
+      "ipAddress": "::1"
+    },
+    {
+      "id": "478af2ca-71da-40df-af65-5778a494fb96",
+      "userId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "action": "LOGIN",
+      "entityType": "User",
+      "entityId": "24b831f8-fdc4-43b9-b84e-4120f6d35621",
+      "changes": "{\"email\":\"admin@golfcarts.com\"}",
+      "timestamp": "2026-01-29T17:35:55.604Z",
+      "ipAddress": "::1"
+    }
+  ],
+  "pricingSettings": []
+}

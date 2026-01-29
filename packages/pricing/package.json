@@ -1,0 +1,17 @@
+{
+  "name": "@cart-configurator/pricing",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo 'No tests yet'"
+  },
+  "dependencies": {
+    "@cart-configurator/types": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}

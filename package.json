@@ -1,0 +1,22 @@
+{
+  "name": "cart-configurator",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev:web": "npm run dev --workspace=apps/web",
+    "dev:api": "npm run dev --workspace=apps/api",
+    "build:web": "npm run build --workspace=apps/web",
+    "build:api": "npm run build --workspace=apps/api",
+    "build:packages": "npm run build --workspace=packages/types && npm run build --workspace=packages/config && npm run build --workspace=packages/rules && npm run build --workspace=packages/pricing",
+    "build": "npm run build:packages && npm run build:web && npm run build:api",
+    "test": "npm run test --workspaces --if-present"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.5",
+    "typescript": "^5.3.3"
+  }
+}

@@ -1,0 +1,190 @@
+// Prisma schema for Golf Cart Configurator
+// Production schema using PostgreSQL (Supabase)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Saved cart configurations
+model Configuration {
+  id                 String   @id
+  platformId         String
+  selectedOptions    String   // JSON array of option IDs
+  materialSelections String   // JSON array of material selections
+  buildNotes         String
+  createdAt          DateTime
+  updatedAt          DateTime
+  
+  quotes Quote[]
+}
+
+// Quote requests from customers
+model Quote {
+  id              String   @id @default(uuid())
+  configurationId String
+  customerName    String
+  customerEmail   String
+  customerPhone   String
+  message         String
+  status          String   // QuoteStatus enum value
+  submittedAt     DateTime
+  
+  configuration Configuration @relation(fields: [configurationId], references: [id])
+  
+  @@index([configurationId])
+  @@index([status])
+}
+
+// ============================================
+// Admin System Tables
+// ============================================
+
+// Admin users with role-based access
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  name         String
+  role         String    // SUPER_ADMIN | ADMIN | SALES | ENGINEERING | PRODUCTION | VIEWER
+  isActive     Boolean   @default(true)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  lastLoginAt  DateTime?
+  
+  auditLogs    AuditLog[]
+  
+  @@index([email])
+  @@index([role])
+  @@index([isActive])
+}
+
+// Platforms (moved from seed data to database)
+model Platform {
+  id               String   @id
+  name             String
+  description      String
+  basePrice        Float
+  defaultAssetPath String
+  isActive         Boolean  @default(true)
+  
+  // Specifications stored as JSON
+  specifications   String   @default("{}")
+  
+  // Metadata
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  createdBy        String?
+  
+  options          Option[]
+  
+  @@index([isActive])
+}
+
+// Configuration options (moved from seed data to database)
+model Option {
+  id          String   @id
+  platformId  String
+  category    String   // SEATING | ROOF | WHEELS | LIGHTING | STORAGE | ELECTRONICS | SUSPENSION | FABRICATION
+  name        String
+  description String
+  partPrice   Float
+  laborHours  Float
+  assetPath   String
+  isActive    Boolean  @default(true)
+  
+  // Additional specifications as JSON
+  specifications String @default("{}")
+  
+  // Metadata
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  createdBy   String?
+  
+  // Relations
+  platform    Platform          @relation(fields: [platformId], references: [id])
+  requires    OptionRelation[]  @relation("OptionRequires")
+  requiredBy  OptionRelation[]  @relation("RelatedOption")
+  
+  @@index([platformId])
+  @@index([category])
+  @@index([isActive])
+}
+
+// Option compatibility rules (requires/excludes)
+model OptionRelation {
+  id         String   @id @default(uuid())
+  optionId   String
+  relatedId  String
+  type       String   // REQUIRES | EXCLUDES
+  reason     String?  // Human-readable explanation
+  
+  createdAt  DateTime @default(now())
+  createdBy  String?
+  
+  option     Option   @relation("OptionRequires", fields: [optionId], references: [id], onDelete: Cascade)
+  related    Option   @relation("RelatedOption", fields: [relatedId], references: [id], onDelete: Cascade)
+  
+  @@unique([optionId, relatedId, type])
+  @@index([optionId])
+  @@index([type])
+}
+
+// Materials (moved from seed data to database)
+model Material {
+  id              String   @id
+  zone            String   // BODY | SEATS | ROOF | METAL | GLASS
+  type            String   // PAINT | VINYL | POWDERCOAT | FABRIC | TINT
+  name            String
+  description     String
+  color           String   // hex color code
+  finish          String   // GLOSS | MATTE | SATIN | METALLIC
+  priceMultiplier Float
+  isActive        Boolean  @default(true)
+  
+  // Additional specifications as JSON
+  specifications  String   @default("{}")
+  
+  // Metadata
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  createdBy       String?
+  
+  @@index([zone])
+  @@index([type])
+  @@index([isActive])
+}
+
+// Audit log for tracking all changes
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String
+  action     String   // CREATE | UPDATE | DELETE | LOGIN | LOGOUT
+  entityType String   // Platform | Option | Material | User | etc
+  entityId   String
+  changes    String   // JSON of what changed
+  timestamp  DateTime @default(now())
+  ipAddress  String?
+  
+  user       User @relation(fields: [userId], references: [id])
+  
+  @@index([userId])
+  @@index([entityType])
+  @@index([timestamp])
+}
+
+// Settings for labor rates and pricing
+model PricingSetting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String   // JSON value
+  description String
+  updatedAt   DateTime @updatedAt
+  updatedBy   String?
+  
+  @@index([key])
+}
