@@ -112,21 +112,21 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     }
 
     const results = {
-      platforms: platforms.map((p) => ({
+      platforms: platforms.map((p: { id: string; name: string; description: string; basePrice: number }) => ({
         type: 'platform' as const,
         id: p.id,
         title: p.name,
         subtitle: `$${p.basePrice.toFixed(2)} - ${p.description.substring(0, 60)}${p.description.length > 60 ? '...' : ''}`,
         url: `/admin/platforms`,
       })),
-      options: options.map((o) => ({
+      options: options.map((o: { id: string; name: string; category: string; partPrice: number }) => ({
         type: 'option' as const,
         id: o.id,
         title: o.name,
         subtitle: `${o.category} - $${o.partPrice.toFixed(2)}`,
         url: `/admin/options/${o.id}`,
       })),
-      materials: materials.map((m) => ({
+      materials: materials.map((m: { id: string; name: string; zone: string; type: string; finish: string; color: string }) => ({
         type: 'material' as const,
         id: m.id,
         title: m.name,

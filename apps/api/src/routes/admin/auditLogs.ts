@@ -110,7 +110,7 @@ router.get('/stats', async (_req: Request, res: Response): Promise<void> => {
     res.json({
       totalLogs,
       recentLogs,
-      actionCounts: actionCounts.map((ac) => ({
+      actionCounts: actionCounts.map((ac: { action: string; _count: { action: number } }) => ({
         action: ac.action,
         count: ac._count.action,
       })),
