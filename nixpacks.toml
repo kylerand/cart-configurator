@@ -6,12 +6,12 @@ nixPkgs = ["nodejs_18", "openssl"]
 [phases.install]
 cmds = [
   "npm install --production=false",
-  "npm run build:packages",
-  "cd apps/api && npx prisma generate"
+  "npm run build:packages"
 ]
 
 [phases.build]
 cmds = [
+  "cd apps/api && npx prisma generate",
   "cd apps/api && npm run build"
 ]
 
