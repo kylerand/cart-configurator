@@ -17,14 +17,16 @@
 - Select: **"Vite"**
 
 ### Root Directory
-- Click **"Edit"**
-- Set to: `apps/web`
-- Click **"Continue"**
+- **Framework:** Vite
+- **Root Directory:** Leave blank or set to `.` (root directory)
+  - **DO NOT set to `apps/web`** - monorepo needs root access
 
 ### Build Settings
-Vercel should auto-detect these, but verify:
-- **Build Command:** `npm run build`
-- **Output Directory:** `dist`
+Vercel should auto-detect these, but **IMPORTANT - Override them**:
+- **Framework Preset:** Vite
+- **Root Directory:** Leave as `.` (root) - do NOT set to `apps/web`
+- **Build Command:** `npm install && npm run build:packages && cd apps/web && npm run build`
+- **Output Directory:** `apps/web/dist`
 - **Install Command:** `npm install`
 
 ## Step 4: Environment Variables
