@@ -4,7 +4,14 @@
  * Centralized HTTP client for admin endpoints with auth token injection.
  */
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+// Ensure API URL doesn't have /api suffix (admin routes already include it)
+const getApiBase = () => {
+  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+  // Remove /api suffix if present, as admin routes use full paths
+  return baseUrl.replace(/\/api$/, '');
+};
+
+const API_BASE = getApiBase();
 
 export interface ApiError {
   error: string;

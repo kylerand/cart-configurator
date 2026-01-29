@@ -10,7 +10,13 @@ import {
   QuoteRequest
 } from '@cart-configurator/types';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
+// Ensure API URL always ends with /api
+const getApiBase = () => {
+  const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+  return baseUrl.endsWith('/api') ? baseUrl : `${baseUrl}/api`;
+};
+
+const API_BASE = getApiBase();
 
 /**
  * Fetches the base platform definition.
