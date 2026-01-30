@@ -12,8 +12,11 @@ import type { Platform } from '@cart-configurator/types';
 export function PlatformSelector() {
   const [platforms, setPlatforms] = useState<Platform[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const currentPlatform = useConfiguratorStore(state => state.configuration?.platform);
+  const currentPlatformId = useConfiguratorStore(state => state.configuration?.platformId);
   const switchPlatform = useConfiguratorStore(state => state.switchPlatform);
+  
+  // Find the current platform object from the platforms list
+  const currentPlatform = platforms.find(p => p.id === currentPlatformId);
 
   useEffect(() => {
     loadPlatforms();
