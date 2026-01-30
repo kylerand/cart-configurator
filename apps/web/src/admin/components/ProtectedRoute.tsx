@@ -12,8 +12,11 @@ export const ProtectedRoute: React.FC = () => {
   const { isAuthenticated, isLoading, checkAuth } = useAuthStore();
   
   useEffect(() => {
-    checkAuth();
-  }, [checkAuth]);
+    // Only check auth if not already authenticated
+    if (!isAuthenticated && !isLoading) {
+      checkAuth();
+    }
+  }, [isAuthenticated, isLoading, checkAuth]);
   
   if (isLoading) {
     return (
