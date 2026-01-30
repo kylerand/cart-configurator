@@ -1,7 +1,7 @@
 {
   "buildCommand": "npm run build:full",
   "outputDirectory": "dist",
-  "installCommand": "cd ../.. && npm install",
+  "installCommand": "cd ../.. && npm install --include=dev",
   "framework": "vite",
   "rewrites": [
     {
