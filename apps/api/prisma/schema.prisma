@@ -46,21 +46,25 @@ model Quote {
 
 // Admin users with role-based access
 model User {
-  id           String    @id @default(uuid())
-  email        String    @unique
-  passwordHash String
-  name         String
-  role         String    // SUPER_ADMIN | ADMIN | SALES | ENGINEERING | PRODUCTION | VIEWER
-  isActive     Boolean   @default(true)
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
-  lastLoginAt  DateTime?
+  id             String    @id @default(uuid())
+  supabaseUserId String?   @unique  // Link to Supabase auth.users (nullable during migration)
+  email          String    @unique
+  passwordHash   String?   // Nullable - not used with Supabase auth
+  name           String
+  role           String    // SUPER_ADMIN | ADMIN | SALES | ENGINEERING | PRODUCTION | VIEWER
+  isActive       Boolean   @default(true)
+  invitedBy      String?   // ID of user who sent invitation
+  invitedAt      DateTime? // When invitation was sent
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  lastLoginAt    DateTime?
   
-  auditLogs    AuditLog[]
+  auditLogs      AuditLog[]
   
   @@index([email])
   @@index([role])
   @@index([isActive])
+  @@index([supabaseUserId])
 }
 
 // Platforms (moved from seed data to database)

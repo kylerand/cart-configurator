@@ -14,6 +14,7 @@ import { catalogRouter } from './routes/catalog.js';
 import { configurationRouter } from './routes/configuration.js';
 import { quoteRouter } from './routes/quote.js';
 import adminAuthRouter from './routes/admin/auth.js';
+import adminSupabaseAuthRouter from './routes/admin/supabaseAuth.js';
 import adminPlatformsRouter from './routes/admin/platforms.js';
 import adminOptionsRouter from './routes/admin/options.js';
 import adminMaterialsRouter from './routes/admin/materials.js';
@@ -42,6 +43,7 @@ app.use('/api/quotes', quoteRouter(prisma));
 
 // Admin routes
 app.use('/api/admin/auth', adminAuthRouter);
+app.use('/api/admin/auth/supabase', adminSupabaseAuthRouter);
 app.use('/api/admin/platforms', adminPlatformsRouter);
 app.use('/api/admin/options', adminOptionsRouter);
 app.use('/api/admin/materials', adminMaterialsRouter);

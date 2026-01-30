@@ -46,6 +46,12 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       return;
     }
     
+    // Check if user has password (may be Supabase-only user)
+    if (!user.passwordHash) {
+      res.status(401).json({ error: 'Please use Supabase authentication' });
+      return;
+    }
+    
     // Verify password
     const isValid = await verifyPassword(password, user.passwordHash);
     

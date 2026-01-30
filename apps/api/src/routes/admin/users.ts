@@ -8,6 +8,7 @@ import { Router, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { authenticate, requireRole } from '../../auth/authMiddleware.js';
 import { UserRole, hashPassword } from '../../auth/authUtils.js';
+import { inviteUser, getUserByEmail } from '../../auth/supabaseAuth.js';
 
 const router = Router();
 const prisma = new PrismaClient();
@@ -320,6 +321,201 @@ router.delete(
     } catch (error) {
       console.error('Delete user error:', error);
       res.status(500).json({ error: 'Failed to deactivate user' });
+    }
+  }
+);
+
+/**
+ * POST /api/admin/users/invite
+ * 
+ * Invite a new user via Supabase (sends magic link email).
+ * Requires ADMIN or SUPER_ADMIN role.
+ */
+router.post(
+  '/invite',
+  requireRole([UserRole.ADMIN, UserRole.SUPER_ADMIN]),
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { email, name, role } = req.body;
+      
+      // Validation
+      if (!email || !name || !role) {
+        res.status(400).json({ error: 'Email, name, and role are required' });
+        return;
+      }
+      
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        res.status(400).json({ error: 'Invalid email format' });
+        return;
+      }
+      
+      // Validate role
+      const validRoles = Object.values(UserRole);
+      if (!validRoles.includes(role as UserRole)) {
+        res.status(400).json({ 
+          error: 'Invalid role',
+          validRoles,
+        });
+        return;
+      }
+      
+      // Check if user already exists in local database
+      const existingLocal = await prisma.user.findUnique({
+        where: { email: email.toLowerCase() },
+      });
+      
+      if (existingLocal) {
+        res.status(409).json({ error: 'User with this email already exists' });
+        return;
+      }
+      
+      // Check if user exists in Supabase
+      const existingSupabase = await getUserByEmail(email);
+      if (existingSupabase) {
+        res.status(409).json({ error: 'User with this email already exists in auth system' });
+        return;
+      }
+      
+      // Send invitation via Supabase
+      const { user: supabaseUser, error } = await inviteUser(
+        email,
+        name,
+        role as UserRole,
+        req.user?.userId
+      );
+      
+      if (error || !supabaseUser) {
+        res.status(500).json({ error: error || 'Failed to send invitation' });
+        return;
+      }
+      
+      // Create local user record
+      const user = await prisma.user.create({
+        data: {
+          supabaseUserId: supabaseUser.id,
+          email: email.toLowerCase(),
+          name,
+          role,
+          passwordHash: null, // Not used with Supabase auth
+          invitedBy: req.user?.userId,
+          invitedAt: new Date(),
+        },
+        select: {
+          id: true,
+          supabaseUserId: true,
+          email: true,
+          name: true,
+          role: true,
+          isActive: true,
+          invitedBy: true,
+          invitedAt: true,
+          createdAt: true,
+        },
+      });
+      
+      // Audit log
+      await prisma.auditLog.create({
+        data: {
+          userId: req.user!.userId,
+          action: 'INVITE_USER',
+          entityType: 'User',
+          entityId: user.id,
+          changes: JSON.stringify({ 
+            email, 
+            name, 
+            role,
+            supabaseUserId: supabaseUser.id,
+          }),
+          ipAddress: req.ip,
+        },
+      });
+      
+      res.status(201).json({ 
+        user,
+        message: `Invitation sent to ${email}`,
+      });
+    } catch (error) {
+      console.error('Invite user error:', error);
+      res.status(500).json({ error: 'Failed to invite user' });
+    }
+  }
+);
+
+/**
+ * POST /api/admin/users/:id/resend-invite
+ * 
+ * Resend invitation to a user (for expired invitations).
+ * Requires ADMIN or SUPER_ADMIN role.
+ */
+router.post(
+  '/:id/resend-invite',
+  requireRole([UserRole.ADMIN, UserRole.SUPER_ADMIN]),
+  async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { id } = req.params;
+      
+      // Find the user
+      const user = await prisma.user.findUnique({
+        where: { id },
+      });
+      
+      if (!user) {
+        res.status(404).json({ error: 'User not found' });
+        return;
+      }
+      
+      // User must have been invited (have invitedAt set)
+      if (!user.invitedAt) {
+        res.status(400).json({ error: 'User was not invited via email system' });
+        return;
+      }
+      
+      // Send new invitation
+      const { user: supabaseUser, error } = await inviteUser(
+        user.email,
+        user.name,
+        user.role as UserRole,
+        req.user?.userId
+      );
+      
+      if (error) {
+        // If user already exists in Supabase, they've already accepted
+        if (error.includes('already exists') || error.includes('already registered')) {
+          res.status(400).json({ error: 'User has already accepted the invitation' });
+          return;
+        }
+        res.status(500).json({ error });
+        return;
+      }
+      
+      // Update invitation timestamp and potentially the Supabase user ID
+      await prisma.user.update({
+        where: { id },
+        data: {
+          invitedAt: new Date(),
+          invitedBy: req.user?.userId,
+          supabaseUserId: supabaseUser?.id || user.supabaseUserId,
+        },
+      });
+      
+      // Audit log
+      await prisma.auditLog.create({
+        data: {
+          userId: req.user!.userId,
+          action: 'RESEND_INVITE',
+          entityType: 'User',
+          entityId: id,
+          changes: JSON.stringify({ email: user.email }),
+          ipAddress: req.ip,
+        },
+      });
+      
+      res.json({ message: `Invitation resent to ${user.email}` });
+    } catch (error) {
+      console.error('Resend invite error:', error);
+      res.status(500).json({ error: 'Failed to resend invitation' });
     }
   }
 );

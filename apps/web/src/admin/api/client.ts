@@ -2,7 +2,16 @@
  * Admin API client.
  * 
  * Centralized HTTP client for admin endpoints with auth token injection.
+ * Supports both legacy JWT tokens and Supabase tokens.
  */
+
+import { getAccessToken as getSupabaseToken } from '../../lib/supabase';
+
+/**
+ * Feature flag to enable Supabase authentication.
+ * Set to true to use Supabase tokens instead of JWT tokens.
+ */
+export const USE_SUPABASE_AUTH = import.meta.env.VITE_USE_SUPABASE_AUTH === 'true';
 
 // Ensure API URL doesn't have /api suffix (admin routes already include it)
 const getApiBase = () => {
@@ -19,13 +28,23 @@ export interface ApiError {
 }
 
 /**
+ * Get the current auth token based on the auth mode.
+ */
+async function getAuthToken(): Promise<string | null> {
+  if (USE_SUPABASE_AUTH) {
+    return getSupabaseToken();
+  }
+  return localStorage.getItem('admin_token');
+}
+
+/**
  * Make authenticated API request.
  */
 async function fetchWithAuth<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const token = localStorage.getItem('admin_token');
+  const token = await getAuthToken();
   
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -52,7 +71,7 @@ async function fetchWithAuth<T>(
 }
 
 export const adminApi = {
-  // Auth endpoints
+  // Legacy JWT Auth endpoints
   async login(email: string, password: string) {
     return fetchWithAuth<{
       accessToken: string;
@@ -84,6 +103,66 @@ export const adminApi = {
         role: string;
       };
     }>('/api/admin/auth/me');
+  },
+  
+  // Supabase Auth endpoints (new)
+  supabase: {
+    async login(email: string, password: string) {
+      return fetchWithAuth<{
+        accessToken: string;
+        refreshToken: string;
+        user: {
+          id: string;
+          supabaseId: string;
+          email: string;
+          name: string;
+          role: string;
+        };
+      }>('/api/admin/auth/supabase/login', {
+        method: 'POST',
+        body: JSON.stringify({ email, password }),
+      });
+    },
+    
+    async logout() {
+      return fetchWithAuth<{ message: string }>('/api/admin/auth/supabase/logout', {
+        method: 'POST',
+      });
+    },
+    
+    async getMe() {
+      return fetchWithAuth<{
+        user: {
+          id: string;
+          supabaseUserId: string;
+          email: string;
+          name: string;
+          role: string;
+        };
+      }>('/api/admin/auth/supabase/me');
+    },
+    
+    async resetPassword(email: string) {
+      return fetchWithAuth<{ message: string }>('/api/admin/auth/supabase/reset-password', {
+        method: 'POST',
+        body: JSON.stringify({ email }),
+      });
+    },
+    
+    async verifyToken(token: string) {
+      return fetchWithAuth<{
+        valid: boolean;
+        user: {
+          id: string;
+          email: string;
+          name: string;
+          role: string;
+        };
+      }>('/api/admin/auth/supabase/verify-token', {
+        method: 'POST',
+        body: JSON.stringify({ token }),
+      });
+    },
   },
   
   // Platform endpoints
@@ -256,6 +335,20 @@ export const adminApi = {
   async deleteUser(id: string) {
     return fetchWithAuth<{ message: string }>(`/api/admin/users/${id}`, {
       method: 'DELETE',
+    });
+  },
+  
+  // User invitation endpoints (Supabase)
+  async inviteUser(data: { email: string; name: string; role: string }) {
+    return fetchWithAuth<{ user: any; message: string }>('/api/admin/users/invite', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  },
+  
+  async resendInvite(userId: string) {
+    return fetchWithAuth<{ message: string }>(`/api/admin/users/${userId}/resend-invite`, {
+      method: 'POST',
     });
   },
 

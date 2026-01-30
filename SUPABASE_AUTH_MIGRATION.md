@@ -67,23 +67,26 @@ model User {
 
 **Backend Changes**:
 - [x] Install `@supabase/supabase-js` in apps/api
-- [ ] Create `apps/api/src/auth/supabaseAuth.ts` - Supabase client initialization
-- [ ] Create new middleware `authenticateSupabase()` - Validates Supabase JWT
-- [ ] Add new login endpoint `POST /api/admin/auth/supabase/login` - Returns Supabase session
-- [ ] Add invitation endpoint `POST /api/admin/users/invite` - Sends magic link
-- [ ] Keep existing JWT endpoints active (for rollback safety)
+- [x] Create `apps/api/src/auth/supabaseAuth.ts` - Supabase client initialization
+- [x] Create new middleware `authenticateSupabase()` - Validates Supabase JWT
+- [x] Add new login endpoint `POST /api/admin/auth/supabase/login` - Returns Supabase session
+- [x] Add invitation endpoint `POST /api/admin/users/invite` - Sends magic link
+- [x] Add resend invitation endpoint `POST /api/admin/users/:id/resend-invite`
+- [x] Keep existing JWT endpoints active (for rollback safety)
 
 **Frontend Changes**:
 - [x] Install `@supabase/supabase-js` in apps/web
-- [ ] Create `apps/web/src/lib/supabase.ts` - Supabase client
-- [ ] Create new auth store `apps/web/src/admin/store/supabaseAuthStore.ts`
-- [ ] Add feature flag to switch between auth systems
-- [ ] Update admin API client to use Supabase tokens when flag enabled
+- [x] Create `apps/web/src/lib/supabase.ts` - Supabase client
+- [x] Create new auth store `apps/web/src/admin/store/supabaseAuthStore.ts`
+- [x] Add feature flag to switch between auth systems (`VITE_USE_SUPABASE_AUTH`)
+- [x] Update admin API client to use Supabase tokens when flag enabled
 
 **Database Changes**:
-- [ ] Add `supabaseUserId` column to existing `User` table (nullable, for migration period)
-- [ ] Create migration script to link existing users to Supabase users
-- [ ] Keep `passwordHash` column (for rollback safety)
+- [x] Add `supabaseUserId` column to existing `User` table (nullable, for migration period)
+- [x] Add `invitedBy` and `invitedAt` columns for invitation tracking
+- [x] Make `passwordHash` column nullable (not used with Supabase auth)
+- [x] Create migration script to link existing users to Supabase users (`scripts/migrate-to-supabase-auth.ts`)
+- [x] Keep `passwordHash` column (for rollback safety)
 
 **Configuration**:
 - Environment variables already set:
@@ -91,6 +94,7 @@ model User {
   - ✅ `SUPABASE_SERVICE_KEY` - Already configured (for admin operations)
   - ✅ `VITE_SUPABASE_URL` - Already configured in Vercel
   - ✅ `VITE_SUPABASE_ANON_KEY` - Already configured in Vercel
+  - 🆕 `VITE_USE_SUPABASE_AUTH` - Feature flag (set to 'true' to enable)
 
 **Testing**:
 - [ ] Test Supabase login flow in isolation
@@ -507,15 +511,17 @@ USING (
 
 ## Next Steps
 
-1. **Review this document** - Confirm approach and timeline align with goals
+1. ~~**Review this document** - Confirm approach and timeline align with goals~~
 2. **Answer questions above** - Clarify any configuration preferences
-3. **Create branch** - Start with `feature/supabase-auth-migration`
-4. **Begin Phase 1** - Set up Supabase Auth alongside existing system
-5. **Test in staging** - Validate each phase before production deployment
+3. ~~**Create branch** - Start with `feature/supabase-auth-migration`~~
+4. ~~**Begin Phase 1** - Set up Supabase Auth alongside existing system~~
+5. **Test in staging** - Validate Supabase auth flow before production deployment
+6. **Run migration script** - Execute `npx tsx scripts/migrate-to-supabase-auth.ts` to migrate existing users
+7. **Enable feature flag** - Set `VITE_USE_SUPABASE_AUTH=true` in Vercel to switch to Supabase auth
 
 ---
 
 **Created**: 2026-01-30  
 **Last Updated**: 2026-01-30  
-**Status**: Planning  
+**Status**: Phase 1 Complete - Ready for Testing  
 **Owner**: @kylerand
