@@ -13,6 +13,10 @@ import { getAccessToken as getSupabaseToken } from '../../lib/supabase';
  */
 export const USE_SUPABASE_AUTH = import.meta.env.VITE_USE_SUPABASE_AUTH === 'true';
 
+// Debug log for auth mode
+console.log('Auth mode:', USE_SUPABASE_AUTH ? 'Supabase' : 'Legacy JWT');
+console.log('VITE_USE_SUPABASE_AUTH value:', import.meta.env.VITE_USE_SUPABASE_AUTH);
+
 // Ensure API URL doesn't have /api suffix (admin routes already include it)
 const getApiBase = () => {
   const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';

@@ -78,15 +78,24 @@ export async function getUser(): Promise<User | null> {
  * Sign in with email and password.
  */
 export async function signInWithEmail(email: string, password: string) {
+  // Check if Supabase is configured
+  if (!isSupabaseConfigured()) {
+    throw new Error('Supabase is not configured. Check VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY environment variables.');
+  }
+  
+  console.log('Attempting Supabase sign in for:', email);
+  
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
   
   if (error) {
+    console.error('Supabase sign in error:', error);
     throw new Error(error.message);
   }
   
+  console.log('Supabase sign in successful');
   return data;
 }
 
