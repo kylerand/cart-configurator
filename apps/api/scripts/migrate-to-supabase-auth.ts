@@ -20,6 +20,7 @@
 
 import { PrismaClient } from '@prisma/client';
 import { createClient } from '@supabase/supabase-js';
+import { randomUUID } from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -107,7 +108,7 @@ async function migrateUser(user: {
     } else {
       // Create new Supabase user with a temporary random password
       // User will need to reset their password
-      const tempPassword = crypto.randomUUID() + 'Aa1!';
+      const tempPassword = randomUUID() + 'Aa1!';
       
       console.log(`  → Creating Supabase user...`);
       const { data, error } = await supabase.auth.admin.createUser({
