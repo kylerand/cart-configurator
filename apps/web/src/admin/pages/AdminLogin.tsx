@@ -4,7 +4,7 @@
  * Simple email/password form with validation.
  */
 
-import React, { useState, FormEvent } from 'react';
+import React, { useState, useEffect, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useThemedStyles } from '../hooks/useThemedStyles';
@@ -13,19 +13,31 @@ import type { Theme } from '../store/themeStore';
 export const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { login, isLoading, error, clearError } = useAuthStore();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { login, checkAuth, error, clearError } = useAuthStore();
   const navigate = useNavigate();
   const styles = useThemedStyles(createStyles);
+  
+  // Check auth on mount - if already authenticated, redirect
+  useEffect(() => {
+    checkAuth().then(() => {
+      if (useAuthStore.getState().isAuthenticated) {
+        navigate('/admin');
+      }
+    });
+  }, []);
   
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     clearError();
+    setIsSubmitting(true);
     
     try {
       await login(email, password);
       navigate('/admin');
     } catch (err) {
       // Error is already in store
+      setIsSubmitting(false);
     }
   };
   
@@ -51,7 +63,7 @@ export const AdminLogin: React.FC = () => {
               required
               autoComplete="email"
               style={styles.input}
-              disabled={isLoading}
+              disabled={isSubmitting}
             />
           </div>
           
@@ -64,19 +76,19 @@ export const AdminLogin: React.FC = () => {
               required
               autoComplete="current-password"
               style={styles.input}
-              disabled={isLoading}
+              disabled={isSubmitting}
             />
           </div>
           
           <button
             type="submit"
-            disabled={isLoading}
+            disabled={isSubmitting}
             style={{
               ...styles.button,
-              ...(isLoading ? styles.buttonDisabled : {}),
+              ...(isSubmitting ? styles.buttonDisabled : {}),
             }}
           >
-            {isLoading ? 'Signing in...' : 'Sign In'}
+            {isSubmitting ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
         
