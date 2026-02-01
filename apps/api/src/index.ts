@@ -21,6 +21,7 @@ import adminMaterialsRouter from './routes/admin/materials.js';
 import adminAuditLogsRouter from './routes/admin/auditLogs.js';
 import adminUsersRouter from './routes/admin/users.js';
 import adminSearchRouter from './routes/admin/search.js';
+import adminUploadsRouter from './routes/admin/uploads.js';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -50,6 +51,7 @@ app.use('/api/admin/materials', adminMaterialsRouter);
 app.use('/api/admin/audit-logs', adminAuditLogsRouter);
 app.use('/api/admin/users', adminUsersRouter);
 app.use('/api/admin/search', adminSearchRouter);
+app.use('/api/admin/uploads', adminUploadsRouter);
 
 // Health check
 app.get('/health', (_req: Request, res: Response) => {

@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 import toast from 'react-hot-toast';
 import { AdminLayout } from '../components/AdminLayout';
 import { CsvImporter } from '../components/CsvImporter';
+import { FileUpload } from '../components/FileUpload';
 import { adminApi } from '../api/client';
 import { exportPlatformsCSV } from '../utils/csvExport';
 import { useThemedStyles } from '../hooks/useThemedStyles';
@@ -223,13 +224,12 @@ export const PlatformsPage: React.FC = () => {
               </div>
               
               <div style={styles.formField}>
-                <label style={styles.label}>Asset Path (optional)</label>
-                <input
-                  type="text"
-                  value={formData.defaultAssetPath}
-                  onChange={(e) => setFormData({ ...formData, defaultAssetPath: e.target.value })}
-                  style={styles.input}
-                  placeholder="/assets/platforms/standard.glb"
+                <FileUpload
+                  category="models"
+                  label="Platform 3D Model"
+                  currentUrl={formData.defaultAssetPath}
+                  onUploadComplete={(url) => setFormData({ ...formData, defaultAssetPath: url })}
+                  onError={(error) => toast.error(error)}
                 />
               </div>
             </div>

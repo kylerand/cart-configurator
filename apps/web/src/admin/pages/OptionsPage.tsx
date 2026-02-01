@@ -8,6 +8,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { AdminLayout } from '../components/AdminLayout';
+import { FileUpload } from '../components/FileUpload';
 import { adminApi } from '../api/client';
 import { useThemedStyles } from '../hooks/useThemedStyles';
 import type { Theme } from '../store/themeStore';
@@ -264,13 +265,12 @@ export const OptionsPage: React.FC = () => {
             </div>
             
             <div style={styles.formField}>
-              <label style={styles.label}>Asset Path (optional)</label>
-              <input
-                type="text"
-                value={formData.assetPath}
-                onChange={(e) => setFormData({ ...formData, assetPath: e.target.value })}
-                style={styles.input}
-                placeholder="/assets/options/roof-extended.glb"
+              <FileUpload
+                category="models"
+                label="3D Model Asset"
+                currentUrl={formData.assetPath}
+                onUploadComplete={(url) => setFormData({ ...formData, assetPath: url })}
+                onError={(error) => toast.error(error)}
               />
             </div>
             

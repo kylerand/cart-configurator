@@ -360,4 +360,97 @@ export const adminApi = {
   globalSearch: async (query: string) => {
     return fetchWithAuth(`${API_BASE}/admin/search?q=${encodeURIComponent(query)}`);
   },
+
+  // File upload endpoints
+  async getUploadStatus() {
+    return fetchWithAuth<{
+      configured: boolean;
+      allowedTypes: {
+        models: string[];
+        textures: string[];
+        images: string[];
+      };
+      maxSizes: {
+        models: string;
+        textures: string;
+        images: string;
+      };
+    }>('/api/admin/uploads/status');
+  },
+
+  async uploadModel(file: File): Promise<{ success: boolean; url: string; key: string; filename: string; error?: string }> {
+    const token = await getAuthToken();
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE}/api/admin/uploads/model`, {
+      method: 'POST',
+      headers: {
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: 'Upload failed' }));
+      throw new Error(error.error || 'Upload failed');
+    }
+
+    return response.json();
+  },
+
+  async uploadTexture(file: File): Promise<{ success: boolean; url: string; key: string; filename: string; error?: string }> {
+    const token = await getAuthToken();
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE}/api/admin/uploads/texture`, {
+      method: 'POST',
+      headers: {
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: 'Upload failed' }));
+      throw new Error(error.error || 'Upload failed');
+    }
+
+    return response.json();
+  },
+
+  async uploadImage(file: File): Promise<{ success: boolean; url: string; key: string; filename: string; error?: string }> {
+    const token = await getAuthToken();
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE}/api/admin/uploads/image`, {
+      method: 'POST',
+      headers: {
+        ...(token ? { 'Authorization': `Bearer ${token}` } : {}),
+      },
+      body: formData,
+    });
+
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ error: 'Upload failed' }));
+      throw new Error(error.error || 'Upload failed');
+    }
+
+    return response.json();
+  },
+
+  async deleteUpload(key: string) {
+    return fetchWithAuth<{ success: boolean; message: string }>(`/api/admin/uploads/${encodeURIComponent(key)}`, {
+      method: 'DELETE',
+    });
+  },
+
+  async validateUpload(filename: string, size: number, category: 'models' | 'textures' | 'images') {
+    return fetchWithAuth<{ valid: boolean; error?: string }>('/api/admin/uploads/validate', {
+      method: 'POST',
+      body: JSON.stringify({ filename, size, category }),
+    });
+  },
 };
