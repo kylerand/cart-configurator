@@ -14,6 +14,9 @@ import { UserRole } from './authUtils.js';
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
 
+console.log('[SupabaseAuth] SUPABASE_URL configured:', !!SUPABASE_URL);
+console.log('[SupabaseAuth] SUPABASE_SERVICE_KEY configured:', !!SUPABASE_SERVICE_KEY);
+
 if (!SUPABASE_URL) {
   console.warn('Warning: SUPABASE_URL not set. Supabase auth will not work.');
 }

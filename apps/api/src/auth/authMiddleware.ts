@@ -20,6 +20,7 @@ const prisma = new PrismaClient();
 
 // Check if Supabase auth is enabled
 const USE_SUPABASE_AUTH = process.env.USE_SUPABASE_AUTH === 'true';
+console.log('[Auth] USE_SUPABASE_AUTH:', USE_SUPABASE_AUTH, '| env value:', process.env.USE_SUPABASE_AUTH);
 
 /**
  * Extends Express Request to include authenticated user.
@@ -54,8 +55,11 @@ export async function authenticate(
     }
     
     if (USE_SUPABASE_AUTH) {
+      console.log('[Auth] Using Supabase authentication');
       // Verify using Supabase
       const supabaseUser = await verifySupabaseToken(token);
+      
+      console.log('[Auth] Supabase verify result:', supabaseUser ? 'valid user' : 'null');
       
       if (!supabaseUser) {
         res.status(401).json({ error: 'Invalid or expired token' });
