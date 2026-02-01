@@ -5,7 +5,7 @@
  */
 
 import React, { useState, useEffect, FormEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
 import { useThemedStyles } from '../hooks/useThemedStyles';
 import type { Theme } from '../store/themeStore';
@@ -90,6 +90,12 @@ export const AdminLogin: React.FC = () => {
           >
             {isSubmitting ? 'Signing in...' : 'Sign In'}
           </button>
+          
+          <div style={styles.forgotPassword}>
+            <Link to="/admin/forgot-password" style={styles.forgotLink}>
+              Forgot your password?
+            </Link>
+          </div>
         </form>
         
         <div style={styles.footer}>
@@ -183,6 +189,16 @@ const createStyles = (theme: Theme): Record<string, React.CSSProperties> => ({
     color: theme.error,
     fontSize: '14px',
     transition: 'all 0.2s ease',
+  },
+  forgotPassword: {
+    textAlign: 'center',
+    marginTop: '8px',
+  },
+  forgotLink: {
+    fontSize: '14px',
+    color: theme.textSecondary,
+    textDecoration: 'none',
+    transition: 'color 0.2s ease',
   },
   footer: {
     marginTop: '24px',
