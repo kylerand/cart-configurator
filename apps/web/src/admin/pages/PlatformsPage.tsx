@@ -9,6 +9,7 @@ import toast from 'react-hot-toast';
 import { AdminLayout } from '../components/AdminLayout';
 import { CsvImporter } from '../components/CsvImporter';
 import { FileUpload } from '../components/FileUpload';
+import { GLBPreview } from '../components/GLBPreview';
 import { adminApi } from '../api/client';
 import { exportPlatformsCSV } from '../utils/csvExport';
 import { useThemedStyles } from '../hooks/useThemedStyles';
@@ -233,6 +234,19 @@ export const PlatformsPage: React.FC = () => {
                 />
               </div>
             </div>
+            
+            {/* 3D Preview */}
+            {formData.defaultAssetPath && (
+              <div style={styles.formRow}>
+                <div style={{ ...styles.formField, flex: 1 }}>
+                  <label style={styles.label}>3D Model Preview</label>
+                  <GLBPreview 
+                    url={formData.defaultAssetPath} 
+                    height={300}
+                  />
+                </div>
+              </div>
+            )}
             
             <div style={styles.formActions}>
               <button type="button" onClick={() => setShowForm(false)} style={styles.cancelButton}>
