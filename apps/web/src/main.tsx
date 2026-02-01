@@ -21,6 +21,7 @@ import { OptionDetailPage } from './admin/pages/OptionDetailPage';
 import { MaterialsPage } from './admin/pages/MaterialsPage';
 import { AuditLogsPage } from './admin/pages/AuditLogsPage';
 import { UsersPage } from './admin/pages/UsersPage';
+import { ResetPasswordPage } from './admin/pages/ResetPasswordPage';
 import { ProtectedRoute } from './admin/components/ProtectedRoute';
 
 function App() {
@@ -86,6 +87,7 @@ function App() {
         
         {/* Admin routes */}
         <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin/reset-password" element={<ResetPasswordPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/admin" element={<AdminDashboard />} />
           <Route path="/admin/platforms" element={<PlatformsPage />} />
