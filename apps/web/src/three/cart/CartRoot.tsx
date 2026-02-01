@@ -27,7 +27,9 @@ import {
   CartConfiguration, 
   Material as ConfigMaterial,
   OptionCategory,
-  MaterialZone 
+  MaterialZone,
+  SubassemblyOffsets,
+  Transform3D 
 } from '@cart-configurator/types';
 import { createMaterialMap, createDefaultMaterialMap, getMaterialForZone } from '../materials/materialFactory';
 import { Chassis } from './Chassis';
@@ -37,6 +39,13 @@ import { Seats } from './Seats';
 import { RearModule } from './RearModule';
 import { Lighting } from './Lighting';
 import { Audio } from './Audio';
+
+// Default transform (no offset)
+const DEFAULT_TRANSFORM: Transform3D = {
+  position: [0, 0, 0],
+  rotation: [0, 0, 0],
+  scale: [1, 1, 1],
+};
 
 interface CartRootProps {
   /**
@@ -63,9 +72,20 @@ interface CartRootProps {
    * If provided, this URL will be used instead of the static asset registry.
    */
   platformAssetUrl?: string;
+  
+  /**
+   * Subassembly position/rotation/scale offsets.
+   * Used to align parts correctly for different platform models.
+   */
+  subassemblyOffsets?: SubassemblyOffsets;
 }
 
-export function CartRoot({ configuration, allMaterials, allOptions, platformAssetUrl }: CartRootProps) {
+export function CartRoot({ configuration, allMaterials, allOptions, platformAssetUrl, subassemblyOffsets }: CartRootProps) {
+  // Get transforms for each subassembly (with defaults)
+  const getTransform = (key: keyof SubassemblyOffsets): Transform3D => {
+    return subassemblyOffsets?.[key] || DEFAULT_TRANSFORM;
+  };
+  
   /**
    * Create material map from configuration.
    * Recalculates only when material selections change.
@@ -114,47 +134,89 @@ export function CartRoot({ configuration, allMaterials, allOptions, platformAsse
   return (
     <group name="cart-root" position={[0, 0, 0]}>
       {/* Core structure - always present */}
-      <Chassis 
-        material={bodyMaterial}
-        materialMap={materialMap}
-        dynamicAssetUrl={platformAssetUrl}
-      />
+      <group 
+        position={getTransform('chassis').position}
+        rotation={getTransform('chassis').rotation}
+        scale={getTransform('chassis').scale}
+      >
+        <Chassis 
+          material={bodyMaterial}
+          materialMap={materialMap}
+          dynamicAssetUrl={platformAssetUrl}
+        />
+      </group>
       
       {/* Wheels - always present (one option required) */}
-      <Wheels 
-        selectedWheelOption={wheelOptions[0] || null}
-        metalMaterial={metalMaterial}
-        materialMap={materialMap}
-      />
+      <group 
+        position={getTransform('wheels').position}
+        rotation={getTransform('wheels').rotation}
+        scale={getTransform('wheels').scale}
+      >
+        <Wheels 
+          selectedWheelOption={wheelOptions[0] || null}
+          metalMaterial={metalMaterial}
+          materialMap={materialMap}
+        />
+      </group>
       
       {/* Roof - always present (one option required) */}
-      <Roof 
-        selectedRoofOption={roofOptions[0] || null}
-        roofMaterial={roofMaterial}
-        materialMap={materialMap}
-      />
+      <group 
+        position={getTransform('roof').position}
+        rotation={getTransform('roof').rotation}
+        scale={getTransform('roof').scale}
+      >
+        <Roof 
+          selectedRoofOption={roofOptions[0] || null}
+          roofMaterial={roofMaterial}
+          materialMap={materialMap}
+        />
+      </group>
       
       {/* Seats - always present (one option required) */}
-      <Seats 
-        selectedSeatOption={seatOptions[0] || null}
-        seatMaterial={seatMaterial}
-        materialMap={materialMap}
-      />
+      <group 
+        position={getTransform('seats').position}
+        rotation={getTransform('seats').rotation}
+        scale={getTransform('seats').scale}
+      >
+        <Seats 
+          selectedSeatOption={seatOptions[0] || null}
+          seatMaterial={seatMaterial}
+          materialMap={materialMap}
+        />
+      </group>
       
       {/* Optional accessories */}
-      <RearModule 
-        selectedStorageOptions={storageOptions}
-        metalMaterial={metalMaterial}
-        materialMap={materialMap}
-      />
+      <group 
+        position={getTransform('rearModule').position}
+        rotation={getTransform('rearModule').rotation}
+        scale={getTransform('rearModule').scale}
+      >
+        <RearModule 
+          selectedStorageOptions={storageOptions}
+          metalMaterial={metalMaterial}
+          materialMap={materialMap}
+        />
+      </group>
       
-      <Lighting 
-        selectedLightingOptions={lightingOptions}
-      />
+      <group 
+        position={getTransform('lighting').position}
+        rotation={getTransform('lighting').rotation}
+        scale={getTransform('lighting').scale}
+      >
+        <Lighting 
+          selectedLightingOptions={lightingOptions}
+        />
+      </group>
       
-      <Audio 
-        selectedAudioOptions={audioOptions}
-      />
+      <group 
+        position={getTransform('audio').position}
+        rotation={getTransform('audio').rotation}
+        scale={getTransform('audio').scale}
+      >
+        <Audio 
+          selectedAudioOptions={audioOptions}
+        />
+      </group>
     </group>
   );
 }

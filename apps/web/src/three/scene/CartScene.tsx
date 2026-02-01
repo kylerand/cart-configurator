@@ -160,6 +160,7 @@ export function CartScene({
           allMaterials={allMaterials}
           allOptions={allOptions}
           platformAssetUrl={platform?.defaultAssetPath}
+          subassemblyOffsets={platform?.subassemblyOffsets}
         />
       </Canvas>
     </div>

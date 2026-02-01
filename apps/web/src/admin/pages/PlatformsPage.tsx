@@ -10,6 +10,7 @@ import { AdminLayout } from '../components/AdminLayout';
 import { CsvImporter } from '../components/CsvImporter';
 import { FileUpload } from '../components/FileUpload';
 import { GLBPreview } from '../components/GLBPreview';
+import { OffsetEditor, SubassemblyOffsets } from '../components/OffsetEditor';
 import { adminApi } from '../api/client';
 import { exportPlatformsCSV } from '../utils/csvExport';
 import { useThemedStyles } from '../hooks/useThemedStyles';
@@ -21,6 +22,7 @@ interface Platform {
   description: string;
   basePrice: number;
   defaultAssetPath: string;
+  subassemblyOffsets?: SubassemblyOffsets;
   isActive: boolean;
 }
 
@@ -38,6 +40,7 @@ export const PlatformsPage: React.FC = () => {
     description: '',
     basePrice: '',
     defaultAssetPath: '',
+    subassemblyOffsets: {} as SubassemblyOffsets,
   });
   
   useEffect(() => {
@@ -63,6 +66,7 @@ export const PlatformsPage: React.FC = () => {
       description: '',
       basePrice: '',
       defaultAssetPath: '',
+      subassemblyOffsets: {},
     });
     setEditingId(null);
     setShowForm(true);
@@ -75,6 +79,7 @@ export const PlatformsPage: React.FC = () => {
       description: platform.description,
       basePrice: platform.basePrice.toString(),
       defaultAssetPath: platform.defaultAssetPath || '',
+      subassemblyOffsets: platform.subassemblyOffsets || {},
     });
     setEditingId(platform.id);
     setShowForm(true);
@@ -247,6 +252,16 @@ export const PlatformsPage: React.FC = () => {
                 </div>
               </div>
             )}
+            
+            {/* Subassembly Offsets */}
+            <div style={styles.formRow}>
+              <div style={{ ...styles.formField, flex: 1 }}>
+                <OffsetEditor
+                  offsets={formData.subassemblyOffsets}
+                  onChange={(offsets) => setFormData({ ...formData, subassemblyOffsets: offsets })}
+                />
+              </div>
+            </div>
             
             <div style={styles.formActions}>
               <button type="button" onClick={() => setShowForm(false)} style={styles.cancelButton}>

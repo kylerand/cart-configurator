@@ -86,7 +86,7 @@ router.post(
   requireRole([UserRole.ADMIN, UserRole.SUPER_ADMIN]),
   async (req: Request, res: Response): Promise<void> => {
     try {
-      const { id, name, description, basePrice, defaultAssetPath, specifications } = req.body;
+      const { id, name, description, basePrice, defaultAssetPath, specifications, subassemblyOffsets } = req.body;
       
       // Validation
       if (!id || !name || !description || basePrice === undefined) {
@@ -110,6 +110,7 @@ router.post(
           basePrice: parseFloat(basePrice),
           defaultAssetPath: defaultAssetPath || '',
           specifications: specifications ? JSON.stringify(specifications) : '{}',
+          subassemblyOffsets: subassemblyOffsets ? JSON.stringify(subassemblyOffsets) : '{}',
           createdBy: req.user?.userId,
         },
       });
@@ -145,7 +146,7 @@ router.put(
   async (req: Request, res: Response): Promise<void> => {
     try {
       const { id } = req.params;
-      const { name, description, basePrice, defaultAssetPath, specifications, isActive } = req.body;
+      const { name, description, basePrice, defaultAssetPath, specifications, subassemblyOffsets, isActive } = req.body;
       
       // Get existing platform
       const existing = await prisma.platform.findUnique({ where: { id } });
@@ -161,6 +162,7 @@ router.put(
       if (basePrice !== undefined) updateData.basePrice = parseFloat(basePrice);
       if (defaultAssetPath !== undefined) updateData.defaultAssetPath = defaultAssetPath;
       if (specifications !== undefined) updateData.specifications = JSON.stringify(specifications);
+      if (subassemblyOffsets !== undefined) updateData.subassemblyOffsets = JSON.stringify(subassemblyOffsets);
       if (isActive !== undefined) updateData.isActive = isActive;
       
       // Update platform

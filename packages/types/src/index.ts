@@ -215,6 +215,33 @@ export interface Platform {
   description: string;
   basePrice: number;
   defaultAssetPath: string;
+  /**
+   * Position/rotation/scale offsets for each subassembly type.
+   * Used to align parts correctly for different platform models.
+   */
+  subassemblyOffsets?: SubassemblyOffsets;
+}
+
+/**
+ * 3D transform offset for a subassembly.
+ */
+export interface Transform3D {
+  position: [number, number, number];
+  rotation: [number, number, number]; // Euler angles in radians
+  scale: [number, number, number];
+}
+
+/**
+ * Offsets for each subassembly type on a platform.
+ */
+export interface SubassemblyOffsets {
+  chassis?: Transform3D;
+  wheels?: Transform3D;
+  roof?: Transform3D;
+  seats?: Transform3D;
+  rearModule?: Transform3D;
+  lighting?: Transform3D;
+  audio?: Transform3D;
 }
 
 /**

@@ -79,6 +79,9 @@ model Platform {
   // Specifications stored as JSON
   specifications   String   @default("{}")
   
+  // Subassembly position/rotation/scale offsets stored as JSON
+  subassemblyOffsets String @default("{}")
+  
   // Metadata
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
