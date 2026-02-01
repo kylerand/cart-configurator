@@ -35,18 +35,26 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
     const take = parseInt(perPage as string);
     
     const where: any = {};
-    if (action) where.action = action;
-    if (entityType) where.entityType = entityType;
-    if (userId) where.userId = userId;
     
-    // Date range filtering
+    // Only add filters if they have valid values (not undefined or "undefined" string)
+    if (action && action !== 'undefined') where.action = action;
+    if (entityType && entityType !== 'undefined') where.entityType = entityType;
+    if (userId && userId !== 'undefined') where.userId = userId;
+    
+    // Date range filtering - validate dates before using
     if (startDate || endDate) {
-      where.timestamp = {};
-      if (startDate) {
-        where.timestamp.gte = new Date(startDate as string);
-      }
-      if (endDate) {
-        where.timestamp.lte = new Date(endDate as string);
+      const startDateObj = startDate && startDate !== 'undefined' ? new Date(startDate as string) : null;
+      const endDateObj = endDate && endDate !== 'undefined' ? new Date(endDate as string) : null;
+      
+      // Only add timestamp filter if we have valid dates
+      if ((startDateObj && !isNaN(startDateObj.getTime())) || (endDateObj && !isNaN(endDateObj.getTime()))) {
+        where.timestamp = {};
+        if (startDateObj && !isNaN(startDateObj.getTime())) {
+          where.timestamp.gte = startDateObj;
+        }
+        if (endDateObj && !isNaN(endDateObj.getTime())) {
+          where.timestamp.lte = endDateObj;
+        }
       }
     }
     
