@@ -57,9 +57,15 @@ interface CartRootProps {
     category: OptionCategory;
     name: string;
   }>;
+  
+  /**
+   * Dynamic asset URL for the platform chassis model.
+   * If provided, this URL will be used instead of the static asset registry.
+   */
+  platformAssetUrl?: string;
 }
 
-export function CartRoot({ configuration, allMaterials, allOptions }: CartRootProps) {
+export function CartRoot({ configuration, allMaterials, allOptions, platformAssetUrl }: CartRootProps) {
   /**
    * Create material map from configuration.
    * Recalculates only when material selections change.
@@ -111,6 +117,7 @@ export function CartRoot({ configuration, allMaterials, allOptions }: CartRootPr
       <Chassis 
         material={bodyMaterial}
         materialMap={materialMap}
+        dynamicAssetUrl={platformAssetUrl}
       />
       
       {/* Wheels - always present (one option required) */}

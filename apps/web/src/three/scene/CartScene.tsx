@@ -21,7 +21,7 @@
 
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Grid, Environment } from '@react-three/drei';
-import { CartConfiguration, Material as ConfigMaterial, ConfigOption } from '@cart-configurator/types';
+import { CartConfiguration, Material as ConfigMaterial, ConfigOption, Platform } from '@cart-configurator/types';
 import { CartRoot } from '../cart/CartRoot';
 import { SceneConfig } from '../types/threeTypes';
 
@@ -40,6 +40,11 @@ interface CartSceneProps {
    * Complete option catalog for option resolution.
    */
   allOptions: ConfigOption[];
+  
+  /**
+   * Current platform with asset path info.
+   */
+  platform?: Platform | null;
   
   /**
    * Enable debug helpers (axes, grid highlights, bounds).
@@ -85,6 +90,7 @@ export function CartScene({
   configuration, 
   allMaterials, 
   allOptions,
+  platform,
   debug = false 
 }: CartSceneProps) {
   const config = DEFAULT_SCENE_CONFIG;
@@ -153,6 +159,7 @@ export function CartScene({
           configuration={configuration}
           allMaterials={allMaterials}
           allOptions={allOptions}
+          platformAssetUrl={platform?.defaultAssetPath}
         />
       </Canvas>
     </div>

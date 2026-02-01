@@ -19,6 +19,7 @@ export function ConfiguratorPage() {
   const configuration = useConfiguratorStore(state => state.configuration);
   const allMaterials = useConfiguratorStore(state => state.allMaterials);
   const allOptions = useConfiguratorStore(state => state.allOptions);
+  const platform = useConfiguratorStore(state => state.platform);
   const [activePanel, setActivePanel] = useState<'options' | 'materials'>('options');
   const [isSaving, setIsSaving] = useState(false);
 
@@ -123,6 +124,7 @@ export function ConfiguratorPage() {
             configuration={configuration}
             allMaterials={allMaterials}
             allOptions={allOptions}
+            platform={platform}
           />
         </div>
 

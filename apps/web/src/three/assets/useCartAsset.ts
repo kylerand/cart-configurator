@@ -237,3 +237,132 @@ export function clearAllAssetCache(): void {
   // Clear all without arguments
   (useGLTF as unknown as { clear: () => void }).clear();
 }
+
+/**
+ * Loads a GLTF asset from a dynamic URL.
+ * 
+ * Unlike useCartAsset which uses the static registry, this hook accepts
+ * a URL directly. Useful for user-uploaded assets or assets from the database.
+ * 
+ * @param url - URL to the GLTF/GLB file (can be absolute or relative)
+ * @param options - Optional transform options
+ * @returns Asset loading result
+ * 
+ * @example
+ * ```tsx
+ * function DynamicModel({ assetUrl }: { assetUrl: string }) {
+ *   const asset = useDynamicAsset(assetUrl);
+ *   
+ *   if (asset.loading) return <LoadingIndicator />;
+ *   if (asset.model) return <primitive object={asset.model} />;
+ *   return <Placeholder />;
+ * }
+ * ```
+ */
+export function useDynamicAsset(
+  url: string | undefined | null,
+  options?: {
+    scale?: { x: number; y: number; z: number };
+    rotation?: { x: number; y: number; z: number };
+    offset?: { x: number; y: number; z: number };
+  }
+): UseCartAssetResult {
+  const errorRef = useRef<Error | undefined>(undefined);
+  
+  // Only attempt to load if URL is provided and valid
+  const hasValidUrl = !!(url && url.length > 0);
+  
+  // Conditionally load GLTF
+  let gltf: { scene: THREE.Group } | undefined;
+  let gltfError: Error | undefined;
+  
+  try {
+    if (hasValidUrl) {
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      gltf = useGLTF(url!) as { scene: THREE.Group };
+    }
+  } catch (error) {
+    gltfError = error as Error;
+    errorRef.current = gltfError;
+    console.error(`Failed to load dynamic asset from ${url}:`, error);
+  }
+  
+  /**
+   * Prepare the model with optional transforms.
+   */
+  const model = useMemo(() => {
+    if (!gltf) {
+      return undefined;
+    }
+    
+    try {
+      // Clone the scene to prevent mutation of cached original
+      const clonedScene = gltf.scene.clone(true);
+      
+      // Create a new group to hold the model with transforms
+      const group = new THREE.Group();
+      group.name = `dynamic-asset`;
+      
+      // Apply scale if provided
+      if (options?.scale) {
+        clonedScene.scale.set(
+          options.scale.x,
+          options.scale.y,
+          options.scale.z
+        );
+      }
+      
+      // Apply rotation if provided
+      if (options?.rotation) {
+        clonedScene.rotation.set(
+          options.rotation.x,
+          options.rotation.y,
+          options.rotation.z
+        );
+      }
+      
+      // Apply position offset if provided
+      if (options?.offset) {
+        clonedScene.position.set(
+          options.offset.x,
+          options.offset.y,
+          options.offset.z
+        );
+      }
+      
+      // Add the transformed model to the group
+      group.add(clonedScene);
+      
+      return group;
+    } catch (error) {
+      errorRef.current = error as Error;
+      console.error(`Failed to prepare dynamic asset:`, error);
+      return undefined;
+    }
+  }, [gltf, options?.scale, options?.rotation, options?.offset]);
+  
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (model) {
+        model.traverse((object) => {
+          if (object instanceof THREE.Mesh) {
+            object.geometry?.dispose();
+            if (Array.isArray(object.material)) {
+              object.material.forEach(mat => mat.dispose());
+            } else if (object.material) {
+              object.material.dispose();
+            }
+          }
+        });
+      }
+    };
+  }, [model]);
+  
+  return {
+    model,
+    loading: hasValidUrl && !gltf && !gltfError,
+    error: errorRef.current,
+    hasAsset: hasValidUrl,
+  };
+}

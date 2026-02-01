@@ -19,6 +19,7 @@ export type {
 export { 
   useCartAsset,
   useCartAssetPreloader,
+  useDynamicAsset,
   clearAssetCache,
   clearAllAssetCache
 } from './useCartAsset';

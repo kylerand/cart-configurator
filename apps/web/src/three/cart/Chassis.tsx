@@ -4,8 +4,10 @@
  * The chassis is the structural base of the cart. It includes the frame,
  * floor, and mounting points for other subassemblies.
  * 
- * Rendering strategy: Attempts to load GLTF asset first, falls back to
- * placeholder geometry if asset is unavailable or loading fails.
+ * Rendering strategy: 
+ * 1. If dynamicAssetUrl is provided, load from that URL
+ * 2. Otherwise, attempt to load from static asset registry
+ * 3. Falls back to placeholder geometry if no asset is available
  * 
  * Material application: For GLTF models, materials are applied based on
  * mesh name patterns defined in assetRegistry. For placeholders, materials
@@ -15,7 +17,7 @@
 import { useEffect } from 'react';
 import * as THREE from 'three';
 import { CART_DIMENSIONS } from '../types/threeTypes';
-import { SubassemblyId, useCartAsset, getAssetMetadata } from '../assets';
+import { SubassemblyId, useCartAsset, useDynamicAsset, getAssetMetadata } from '../assets';
 import { applyMaterialsToModel } from '../utils';
 import type { MaterialMap } from '../types/threeTypes';
 
@@ -32,12 +34,24 @@ interface ChassisProps {
    * Only used when GLTF asset is loaded.
    */
   materialMap?: MaterialMap;
+  
+  /**
+   * Dynamic asset URL from platform configuration.
+   * If provided, takes priority over static registry.
+   */
+  dynamicAssetUrl?: string;
 }
 
-export function Chassis({ material, materialMap }: ChassisProps) {
-  // Attempt to load GLTF asset
-  const asset = useCartAsset(SubassemblyId.CHASSIS);
+export function Chassis({ material, materialMap, dynamicAssetUrl }: ChassisProps) {
+  // Try dynamic asset first (from platform's defaultAssetPath)
+  const dynamicAsset = useDynamicAsset(dynamicAssetUrl);
+  
+  // Fall back to static registry asset
+  const staticAsset = useCartAsset(SubassemblyId.CHASSIS);
   const metadata = getAssetMetadata(SubassemblyId.CHASSIS);
+  
+  // Use dynamic asset if available, otherwise static
+  const asset = dynamicAsset.hasAsset ? dynamicAsset : staticAsset;
   
   // Apply materials to loaded model
   useEffect(() => {
@@ -49,6 +63,11 @@ export function Chassis({ material, materialMap }: ChassisProps) {
       );
     }
   }, [asset.model, materialMap, metadata]);
+  
+  // Show loading state
+  if (asset.loading) {
+    return null; // Or a loading placeholder
+  }
   
   // Render GLTF model if available
   if (asset.model) {
