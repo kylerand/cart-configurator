@@ -6,7 +6,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
-import { ConfiguratorPage } from './pages/ConfiguratorPage';
+import { ConfiguratorPage } from './pages/ConfiguratorPageBronco';
 import { QuotePage } from './pages/QuotePage';
 import { AdminQuotesPage } from './pages/AdminQuotesPage';
 import { useCatalogLoader } from './hooks/useCatalogLoader';
