@@ -46,10 +46,17 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ children }) => {
         borderColor: theme.border,
       }}>
         <div style={styles.sidebarHeader}>
-          <h1 style={{
-            ...styles.logo,
-            color: theme.text,
-          }}>Golf Cart Admin</h1>
+          <div style={styles.logoContainer}>
+            <img 
+              src="/assets/GG_circle_grill_full_color-01.png" 
+              alt="GG Logo" 
+              style={styles.logoImage} 
+            />
+            <h1 style={{
+              ...styles.logo,
+              color: theme.text,
+            }}>Golf Cart Admin</h1>
+          </div>
           <p style={{
             ...styles.userInfo,
             color: theme.textSecondary,
@@ -144,6 +151,17 @@ const styles: Record<string, React.CSSProperties> = {
   sidebarHeader: {
     padding: '24px 20px',
     borderBottom: '1px solid rgba(128, 128, 128, 0.2)',
+  },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '12px',
+  },
+  logoImage: {
+    width: '32px',
+    height: '32px',
+    objectFit: 'contain',
   },
   logo: {
     margin: '0 0 12px 0',

@@ -45,7 +45,11 @@ export function ConfiguratorPage() {
     return (
       <div style={styles.loadingContainer}>
         <div style={styles.loadingContent}>
-          <div style={styles.loadingLogo}>⚙️</div>
+          <img 
+            src="/assets/GG_circle_grill_full_color-01.png" 
+            alt="GG Logo" 
+            style={styles.loadingLogoImage} 
+          />
           <h2 style={styles.loadingTitle}>LOADING YOUR BUILD</h2>
           <div style={styles.loadingBar}>
             <div style={styles.loadingProgress} />
@@ -61,7 +65,11 @@ export function ConfiguratorPage() {
       <header style={styles.header}>
         <div style={styles.headerLeft}>
           <div style={styles.logoContainer}>
-            <span style={styles.logoIcon}>🏎️</span>
+            <img 
+              src="/assets/GG_circle_grill_full_color-01.png" 
+              alt="GG Logo" 
+              style={styles.logoImage} 
+            />
             <div>
               <h1 style={styles.logoText}>BUILD YOUR RIDE</h1>
               <span style={styles.logoSubtext}>Custom Cart Configurator</span>
@@ -218,8 +226,10 @@ const styles: Record<string, React.CSSProperties> = {
   loadingContent: {
     textAlign: 'center',
   },
-  loadingLogo: {
-    fontSize: '64px',
+  loadingLogoImage: {
+    width: '64px',
+    height: '64px',
+    objectFit: 'contain',
     marginBottom: spacing.lg,
     animation: 'spin 2s linear infinite',
   },
@@ -276,8 +286,10 @@ const styles: Record<string, React.CSSProperties> = {
     alignItems: 'center',
     gap: spacing.md,
   },
-  logoIcon: {
-    fontSize: '32px',
+  logoImage: {
+    width: '40px',
+    height: '40px',
+    objectFit: 'contain',
   },
   logoText: {
     fontFamily: typography.fontFamily.display,
