@@ -5,10 +5,11 @@
 Generates and processes layered transparent WebP images for the 2D
 image-compositing configurator.
 
-Three modes:
+Four modes:
   1. prompts  - Print AI image generation prompts for each needed asset
   2. process  - Remove backgrounds from raw images and output named WebP layers
   3. generate - Create colored placeholder layers for immediate PoC demo
+  4. dalle    - Call DALL-E API to generate images, remove backgrounds, output WebP
 
 Usage:
   # Generate AI prompts to clipboard/stdout
@@ -19,6 +20,10 @@ Usage:
 
   # Generate colored placeholder layers for immediate demo
   python generate_2d_assets.py generate
+
+  # Run full DALL-E pipeline (requires OPENAI_API_KEY env var)
+  OPENAI_API_KEY=sk-... python generate_2d_assets.py dalle
+  OPENAI_API_KEY=sk-... python generate_2d_assets.py dalle --limit 9   # minimum viable set
 """
 
 import argparse
@@ -782,6 +787,151 @@ def _draw_fabrication(draw, cx, cy, opt_id, view):
 
 
 # ---------------------------------------------------------------------------
+# Mode 4: DALL-E API generation + background removal
+# ---------------------------------------------------------------------------
+
+# Priority order for minimum viable set
+MVP_FILENAMES = {
+    "background-front.webp",
+    "background-rear.webp",
+    "background-interior.webp",
+    "paint-white-gloss-cart-front-body.webp",
+    "paint-white-gloss-cart-rear-body.webp",
+    "paint-white-gloss-cart-interior-body.webp",
+    "wheels-chrome-cart-front-wheels.webp",
+    "seat-captain-cart-interior-seats.webp",
+    "roof-extended-cart-front-roof.webp",
+}
+
+
+def dalle_generate(limit: int | None = None):
+    """Generate images via DALL-E API, remove backgrounds, save as WebP."""
+    api_key = os.environ.get("OPENAI_API_KEY")
+    if not api_key:
+        print("❌ OPENAI_API_KEY environment variable not set.")
+        print("   Run: OPENAI_API_KEY=sk-... python generate_2d_assets.py dalle")
+        sys.exit(1)
+
+    try:
+        from openai import OpenAI
+    except ImportError:
+        print("❌ openai package not installed. Run:")
+        print("   pip install openai")
+        sys.exit(1)
+
+    try:
+        from rembg import remove as rembg_remove
+        from PIL import Image
+    except ImportError:
+        print("❌ Missing rembg/Pillow. Run:")
+        print("   pip install rembg Pillow onnxruntime")
+        sys.exit(1)
+
+    import io
+    import time
+
+    client = OpenAI(api_key=api_key)
+    ASSETS_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Load prompts
+    prompts_file = SCRIPT_DIR / "ai_prompts.json"
+    if not prompts_file.exists():
+        print("  Generating prompts first...")
+        generate_prompts()
+
+    with open(prompts_file) as f:
+        all_prompts = json.load(f)
+
+    # Apply limit — prioritize MVP set
+    if limit:
+        # MVP images first, then others up to limit
+        mvp = [p for p in all_prompts if p["filename"] in MVP_FILENAMES]
+        rest = [p for p in all_prompts if p["filename"] not in MVP_FILENAMES]
+        all_prompts = (mvp + rest)[:limit]
+
+    total = len(all_prompts)
+    print(f"\n{'='*60}")
+    print(f"  DALL-E Image Generation Pipeline")
+    print(f"  Generating {total} images via DALL-E API")
+    print(f"  Output: {ASSETS_DIR}")
+    print(f"{'='*60}\n")
+
+    succeeded = 0
+    failed = 0
+
+    for i, prompt_data in enumerate(all_prompts):
+        filename = prompt_data["filename"]
+        prompt = prompt_data["prompt"]
+        out_path = ASSETS_DIR / filename
+
+        # Skip if already exists
+        if out_path.exists():
+            print(f"  [{i+1}/{total}] ⏭️  {filename} (already exists, skipping)")
+            succeeded += 1
+            continue
+
+        print(f"  [{i+1}/{total}] 🎨 Generating: {filename}")
+        print(f"           Purpose: {prompt_data['purpose']}")
+
+        try:
+            # Call DALL-E API
+            response = client.images.generate(
+                model="dall-e-3",
+                prompt=prompt,
+                size="1792x1024",
+                quality="standard",
+                n=1,
+                response_format="url",
+            )
+
+            image_url = response.data[0].url
+
+            # Download the image
+            import urllib.request
+            req = urllib.request.Request(image_url)
+            with urllib.request.urlopen(req) as resp:
+                raw_data = resp.read()
+
+            is_background = "background" in filename
+
+            if is_background:
+                # Keep background as-is
+                img = Image.open(io.BytesIO(raw_data)).convert("RGBA")
+            else:
+                # Remove background
+                print(f"           Removing background...")
+                output_data = rembg_remove(raw_data)
+                img = Image.open(io.BytesIO(output_data)).convert("RGBA")
+
+            # Resize to standard dimensions
+            img = img.resize(IMAGE_SIZE, Image.Resampling.LANCZOS)
+
+            # Save as WebP
+            img.save(out_path, "WEBP", quality=90)
+            size_kb = out_path.stat().st_size // 1024
+            print(f"           ✅ Saved: {filename} ({size_kb}KB)")
+            succeeded += 1
+
+        except Exception as e:
+            print(f"           ❌ Failed: {e}")
+            failed += 1
+
+        # Rate limiting — DALL-E has ~5 req/min for standard tier
+        if i < total - 1:
+            wait = 13  # ~4.6 requests per minute to stay safe
+            print(f"           ⏳ Waiting {wait}s (rate limit)...")
+            time.sleep(wait)
+
+    print(f"\n{'='*60}")
+    print(f"  ✅ Complete: {succeeded} succeeded, {failed} failed")
+    print(f"  Output: {ASSETS_DIR}")
+    est_minutes = total * 13 // 60
+    if failed > 0:
+        print(f"  💡 Re-run to retry failed images (existing ones are skipped)")
+    print(f"{'='*60}\n")
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -796,10 +946,12 @@ Examples:
   %(prog)s generate                         Create colored placeholder layers
         """
     )
-    parser.add_argument("mode", choices=["prompts", "process", "generate"],
+    parser.add_argument("mode", choices=["prompts", "process", "generate", "dalle"],
                         help="Pipeline mode")
     parser.add_argument("--input", type=Path, default=RAW_DIR,
                         help="Input directory for raw images (process mode)")
+    parser.add_argument("--limit", type=int, default=None,
+                        help="Max images to generate (dalle mode). Use --limit 9 for MVP set")
 
     args = parser.parse_args()
 
@@ -809,6 +961,8 @@ Examples:
         process_images(args.input)
     elif args.mode == "generate":
         generate_placeholders()
+    elif args.mode == "dalle":
+        dalle_generate(args.limit)
 
 
 if __name__ == "__main__":
