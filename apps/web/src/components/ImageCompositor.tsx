@@ -13,7 +13,7 @@
 
 import { useState, useCallback } from 'react';
 import { useConfiguratorStore } from '../store/configurator';
-import { OptionCategory } from '@cart-configurator/types';
+import { OptionCategory, MaterialZone } from '@cart-configurator/types';
 import { colors, typography, spacing, borderRadius } from '../styles/broncoTheme';
 
 export type ViewAngle = 'front' | 'rear' | 'interior';
@@ -79,7 +79,13 @@ export function ImageCompositor({ activeView: controlledView, onViewChange }: Im
   const currentViewConfig = VIEW_CONFIGS.find(v => v.id === activeView) || VIEW_CONFIGS[0];
 
   // Build image layers based on current selections
-  const imageLayers = buildImageLayers(currentViewConfig, configuration?.selectedOptions || [], allOptions);
+  const bodyMaterial = configuration?.materialSelections.find(s => s.zone === MaterialZone.BODY);
+  const imageLayers = buildImageLayers(
+    currentViewConfig,
+    configuration?.selectedOptions || [],
+    allOptions,
+    bodyMaterial?.materialId
+  );
 
   return (
     <div style={styles.container}>
@@ -159,7 +165,8 @@ interface ImageLayer {
 function buildImageLayers(
   viewConfig: ViewConfig,
   selectedOptions: string[],
-  allOptions: { id: string; category: string; name: string }[]
+  allOptions: { id: string; category: string; name: string }[],
+  bodyMaterialId?: string
 ): ImageLayer[] {
   const layers: ImageLayer[] = [];
   const view = viewConfig.id;
@@ -167,6 +174,12 @@ function buildImageLayers(
   // Background layer
   const bgSrc = `/assets/2d/background-${view}.webp`;
   layers.push({ src: bgSrc, alt: `${view} background`, slot: 'background' });
+
+  // Body color layer from material selection
+  if (bodyMaterialId) {
+    const bodySrc = `/assets/2d/${bodyMaterialId}-cart-${view}-body.webp`;
+    layers.push({ src: bodySrc, alt: `Body color (${view})`, slot: 'body-color' });
+  }
 
   // Option layers — find selected options and map to image paths
   for (const optionId of selectedOptions) {

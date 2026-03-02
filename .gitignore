@@ -3,6 +3,7 @@ dist/
 *.log
 .DS_Store
 .env
+.venv/
 
 # Deployment credential files (never commit these)
 .env.railway

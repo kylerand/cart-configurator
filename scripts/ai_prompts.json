@@ -1,0 +1,247 @@
+[
+  {
+    "filename": "background-front.webp",
+    "purpose": "Background for front view",
+    "prompt": "Minimalist studio background for product photography, soft gradient from light gray (#e8e8e8) center to darker edges (#b0b0b0), subtle ground shadow area at bottom, front three-quarter view, slightly elevated camera angle, showing front and driver side, no objects, just the empty studio backdrop, 1200x800 pixels"
+  },
+  {
+    "filename": "background-rear.webp",
+    "purpose": "Background for rear view",
+    "prompt": "Minimalist studio background for product photography, soft gradient from light gray (#e8e8e8) center to darker edges (#b0b0b0), subtle ground shadow area at bottom, rear three-quarter view, slightly elevated camera angle, showing back and passenger side, no objects, just the empty studio backdrop, 1200x800 pixels"
+  },
+  {
+    "filename": "background-interior.webp",
+    "purpose": "Background for interior view",
+    "prompt": "Minimalist studio background for product photography, soft gradient from light gray (#e8e8e8) center to darker edges (#b0b0b0), subtle ground shadow area at bottom, interior view from slightly above looking down at seats and dashboard, bird's eye interior, no objects, just the empty studio backdrop, 1200x800 pixels"
+  },
+  {
+    "filename": "paint-white-gloss-cart-front-body.webp",
+    "purpose": "Gloss White cart body, front view",
+    "prompt": "Golf cart body/frame only, painted Gloss White (#FFFFFF), 4-seat golf cart chassis and body panels, NO wheels, NO roof, NO accessories. Just the bare painted body shell on a transparent/white background. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-white-gloss-cart-rear-body.webp",
+    "purpose": "Gloss White cart body, rear view",
+    "prompt": "Golf cart body/frame only, painted Gloss White (#FFFFFF), 4-seat golf cart chassis and body panels, NO wheels, NO roof, NO accessories. Just the bare painted body shell on a transparent/white background. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-white-gloss-cart-interior-body.webp",
+    "purpose": "Gloss White cart interior body panels, interior view",
+    "prompt": "Golf cart interior dashboard and body panels painted Gloss White (#FFFFFF), showing dashboard, steering wheel, floor area, and inner door panels. NO seats, NO roof, NO electronics visible. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-black-matte-cart-front-body.webp",
+    "purpose": "Matte Black cart body, front view",
+    "prompt": "Golf cart body/frame only, painted Matte Black (#1a1a1a), 4-seat golf cart chassis and body panels, NO wheels, NO roof, NO accessories. Just the bare painted body shell on a transparent/white background. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-black-matte-cart-rear-body.webp",
+    "purpose": "Matte Black cart body, rear view",
+    "prompt": "Golf cart body/frame only, painted Matte Black (#1a1a1a), 4-seat golf cart chassis and body panels, NO wheels, NO roof, NO accessories. Just the bare painted body shell on a transparent/white background. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-black-matte-cart-interior-body.webp",
+    "purpose": "Matte Black cart interior body panels, interior view",
+    "prompt": "Golf cart interior dashboard and body panels painted Matte Black (#1a1a1a), showing dashboard, steering wheel, floor area, and inner door panels. NO seats, NO roof, NO electronics visible. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-red-metallic-cart-front-body.webp",
+    "purpose": "Metallic Red cart body, front view",
+    "prompt": "Golf cart body/frame only, painted Metallic Red (#c41e3a), 4-seat golf cart chassis and body panels, NO wheels, NO roof, NO accessories. Just the bare painted body shell on a transparent/white background. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-red-metallic-cart-rear-body.webp",
+    "purpose": "Metallic Red cart body, rear view",
+    "prompt": "Golf cart body/frame only, painted Metallic Red (#c41e3a), 4-seat golf cart chassis and body panels, NO wheels, NO roof, NO accessories. Just the bare painted body shell on a transparent/white background. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-red-metallic-cart-interior-body.webp",
+    "purpose": "Metallic Red cart interior body panels, interior view",
+    "prompt": "Golf cart interior dashboard and body panels painted Metallic Red (#c41e3a), showing dashboard, steering wheel, floor area, and inner door panels. NO seats, NO roof, NO electronics visible. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-blue-gloss-cart-front-body.webp",
+    "purpose": "Ocean Blue cart body, front view",
+    "prompt": "Golf cart body/frame only, painted Ocean Blue (#0077be), 4-seat golf cart chassis and body panels, NO wheels, NO roof, NO accessories. Just the bare painted body shell on a transparent/white background. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-blue-gloss-cart-rear-body.webp",
+    "purpose": "Ocean Blue cart body, rear view",
+    "prompt": "Golf cart body/frame only, painted Ocean Blue (#0077be), 4-seat golf cart chassis and body panels, NO wheels, NO roof, NO accessories. Just the bare painted body shell on a transparent/white background. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "paint-blue-gloss-cart-interior-body.webp",
+    "purpose": "Ocean Blue cart interior body panels, interior view",
+    "prompt": "Golf cart interior dashboard and body panels painted Ocean Blue (#0077be), showing dashboard, steering wheel, floor area, and inner door panels. NO seats, NO roof, NO electronics visible. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "wheels-standard-cart-front-wheels.webp",
+    "purpose": "Standard Wheels (WHEELS), front view",
+    "prompt": "Standard steel golf cart wheels with basic hubcaps, set of 4. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "wheels-standard-cart-rear-wheels.webp",
+    "purpose": "Standard Wheels (WHEELS), rear view",
+    "prompt": "Standard steel golf cart wheels with basic hubcaps, set of 4. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "wheels-chrome-cart-front-wheels.webp",
+    "purpose": "Chrome Wheels (WHEELS), front view",
+    "prompt": "Shiny chrome alloy golf cart wheels, premium polished finish, set of 4. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "wheels-chrome-cart-rear-wheels.webp",
+    "purpose": "Chrome Wheels (WHEELS), rear view",
+    "prompt": "Shiny chrome alloy golf cart wheels, premium polished finish, set of 4. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "wheels-offroad-cart-front-wheels.webp",
+    "purpose": "Off-Road Wheels (WHEELS), front view",
+    "prompt": "Aggressive off-road knobby tires on matte black wheels, lifted stance, set of 4. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "wheels-offroad-cart-rear-wheels.webp",
+    "purpose": "Off-Road Wheels (WHEELS), rear view",
+    "prompt": "Aggressive off-road knobby tires on matte black wheels, lifted stance, set of 4. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "roof-standard-cart-front-roof.webp",
+    "purpose": "Standard Roof (ROOF), front view",
+    "prompt": "Standard flat golf cart canopy roof, basic design. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "roof-standard-cart-rear-roof.webp",
+    "purpose": "Standard Roof (ROOF), rear view",
+    "prompt": "Standard flat golf cart canopy roof, basic design. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "roof-extended-cart-front-roof.webp",
+    "purpose": "Extended Roof (ROOF), front view",
+    "prompt": "Extended golf cart roof canopy with rear overhang for back seat shade. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "roof-extended-cart-rear-roof.webp",
+    "purpose": "Extended Roof (ROOF), rear view",
+    "prompt": "Extended golf cart roof canopy with rear overhang for back seat shade. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "roof-solar-cart-front-roof.webp",
+    "purpose": "Solar Panel Roof (ROOF), front view",
+    "prompt": "Golf cart roof with integrated solar panels on top, modern tech look. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "roof-solar-cart-rear-roof.webp",
+    "purpose": "Solar Panel Roof (ROOF), rear view",
+    "prompt": "Golf cart roof with integrated solar panels on top, modern tech look. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "seat-standard-cart-interior-seats.webp",
+    "purpose": "Standard Bench Seats (SEATING), interior view",
+    "prompt": "Standard vinyl bench seat for golf cart, basic black. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "seat-captain-cart-interior-seats.webp",
+    "purpose": "Captain Seats (SEATING), interior view",
+    "prompt": "Individual captain bucket seats for golf cart, bolstered sides, premium look. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "seat-premium-cart-interior-seats.webp",
+    "purpose": "Premium Suspension Seats (SEATING), interior view",
+    "prompt": "Premium suspension seats for golf cart with thick cushioning and armrests. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "light-basic-cart-front-accessories.webp",
+    "purpose": "Basic Lighting (LIGHTING), front view",
+    "prompt": "Basic golf cart headlights and taillights, standard halogen. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "light-basic-cart-rear-accessories.webp",
+    "purpose": "Basic Lighting (LIGHTING), rear view",
+    "prompt": "Basic golf cart headlights and taillights, standard halogen. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "light-premium-cart-front-accessories.webp",
+    "purpose": "Premium LED Package (LIGHTING), front view",
+    "prompt": "Premium LED light package for golf cart, bright white LEDs, DRL strip. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "light-premium-cart-rear-accessories.webp",
+    "purpose": "Premium LED Package (LIGHTING), rear view",
+    "prompt": "Premium LED light package for golf cart, bright white LEDs, DRL strip. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "light-bar-cart-front-accessories.webp",
+    "purpose": "Roof Light Bar (LIGHTING), front view",
+    "prompt": "LED light bar mounted on golf cart roof, off-road auxiliary lighting. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "light-bar-cart-rear-accessories.webp",
+    "purpose": "Roof Light Bar (LIGHTING), rear view",
+    "prompt": "LED light bar mounted on golf cart roof, off-road auxiliary lighting. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "storage-rear-basket-cart-rear-storage.webp",
+    "purpose": "Rear Basket (STORAGE), rear view",
+    "prompt": "Wire mesh rear cargo basket attached to back of golf cart. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "storage-under-seat-cart-rear-storage.webp",
+    "purpose": "Under-Seat Storage (STORAGE), rear view",
+    "prompt": "Under-seat storage compartment for golf cart, open showing space. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "audio-basic-cart-interior-audio.webp",
+    "purpose": "Basic Audio (ELECTRONICS), interior view",
+    "prompt": "Basic golf cart speakers mounted in dash area. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "audio-premium-cart-interior-audio.webp",
+    "purpose": "Premium Audio (ELECTRONICS), interior view",
+    "prompt": "Premium marine-grade speaker system in golf cart with subwoofer. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "electronics-usb-cart-interior-audio.webp",
+    "purpose": "USB Charging Ports (ELECTRONICS), interior view",
+    "prompt": "USB charging ports panel installed in golf cart dashboard. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. interior view from slightly above looking down at seats and dashboard, bird's eye interior. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "suspension-lift-3-cart-front-body.webp",
+    "purpose": "3\" Lift Kit (SUSPENSION), front view",
+    "prompt": "Golf cart with 3-inch suspension lift kit, slightly raised body. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "suspension-lift-3-cart-rear-body.webp",
+    "purpose": "3\" Lift Kit (SUSPENSION), rear view",
+    "prompt": "Golf cart with 3-inch suspension lift kit, slightly raised body. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "suspension-lift-6-cart-front-body.webp",
+    "purpose": "6\" Lift Kit (SUSPENSION), front view",
+    "prompt": "Golf cart with 6-inch suspension lift kit, noticeably raised body, aggressive stance. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "suspension-lift-6-cart-rear-body.webp",
+    "purpose": "6\" Lift Kit (SUSPENSION), rear view",
+    "prompt": "Golf cart with 6-inch suspension lift kit, noticeably raised body, aggressive stance. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "fab-custom-bumper-cart-front-accessories.webp",
+    "purpose": "Custom Front Bumper (FABRICATION), front view",
+    "prompt": "Custom fabricated front brush guard bumper on golf cart, tubular steel. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "fab-custom-bumper-cart-rear-accessories.webp",
+    "purpose": "Custom Front Bumper (FABRICATION), rear view",
+    "prompt": "Custom fabricated front brush guard bumper on golf cart, tubular steel. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "fab-bed-liner-cart-front-accessories.webp",
+    "purpose": "Spray-In Bed Liner (FABRICATION), front view",
+    "prompt": "Spray-in bed liner coating on golf cart rear cargo area, textured black. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. front three-quarter view, slightly elevated camera angle, showing front and driver side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  },
+  {
+    "filename": "fab-bed-liner-cart-rear-accessories.webp",
+    "purpose": "Spray-In Bed Liner (FABRICATION), rear view",
+    "prompt": "Spray-in bed liner coating on golf cart rear cargo area, textured black. ONLY show this specific component/part, NO other parts visible. Isolated on pure white background for compositing. rear three-quarter view, slightly elevated camera angle, showing back and passenger side. Product photography style, studio lighting, solid pure white background (#FFFFFF), no shadows on background, clean isolated subject, high resolution, photorealistic, professional product shot"
+  }
+]
