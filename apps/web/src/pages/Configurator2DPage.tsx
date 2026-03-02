@@ -400,7 +400,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   sidebarContent: {
     flex: 1,
-    overflow: 'hidden',
+    overflowY: 'auto',
     display: 'flex',
     flexDirection: 'column',
   },

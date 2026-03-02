@@ -175,11 +175,10 @@ function buildImageLayers(
   const bgSrc = `/assets/2d/background-${view}.webp`;
   layers.push({ src: bgSrc, alt: `${view} background`, slot: 'background' });
 
-  // Body color layer from material selection
-  if (bodyMaterialId) {
-    const bodySrc = `/assets/2d/${bodyMaterialId}-cart-${view}-body.webp`;
-    layers.push({ src: bodySrc, alt: `Body color (${view})`, slot: 'body-color' });
-  }
+  // Body color layer from material selection (default to white gloss)
+  const effectiveBodyId = bodyMaterialId || 'paint-white-gloss';
+  const bodySrc = `/assets/2d/${effectiveBodyId}-cart-${view}-body.webp`;
+  layers.push({ src: bodySrc, alt: `Body color (${view})`, slot: 'body-color' });
 
   // Option layers — find selected options and map to image paths
   for (const optionId of selectedOptions) {
