@@ -27,7 +27,7 @@ interface ViewConfig {
 
 const VIEW_CONFIGS: ViewConfig[] = [
   { id: 'front', label: 'Front', icon: '🚗', layers: ['background', 'body', 'wheels', 'roof', 'accessories'] },
-  { id: 'rear', label: 'Rear', icon: '🔙', layers: ['background', 'body', 'wheels', 'roof', 'storage'] },
+  { id: 'rear', label: 'Rear', icon: '🔙', layers: ['background', 'body', 'wheels', 'roof', 'storage', 'accessories'] },
   { id: 'interior', label: 'Interior', icon: '🪑', layers: ['background', 'seats', 'dash', 'audio'] },
 ];
 
