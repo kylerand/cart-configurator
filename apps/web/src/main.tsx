@@ -7,6 +7,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { ConfiguratorPage } from './pages/ConfiguratorPageBronco';
+import { Configurator2DPage } from './pages/Configurator2DPage';
 import { QuotePage } from './pages/QuotePage';
 import { AdminQuotesPage } from './pages/AdminQuotesPage';
 import { useCatalogLoader } from './hooks/useCatalogLoader';
@@ -83,6 +84,7 @@ function App() {
       
       <Routes>
         <Route path="/" element={<ConfiguratorPage />} />
+        <Route path="/2d" element={<Configurator2DPage />} />
         <Route path="/quote" element={<QuotePage />} />
         <Route path="/admin/quotes" element={<AdminQuotesPage />} />
         

@@ -1,34 +1,40 @@
 /**
- * Main configurator page - Retro Bronco Edition.
+ * 2D Configurator Page — Image compositing edition.
  * 
- * A premium, immersive cart building experience inspired by
- * classic Ford Bronco aesthetics and vintage automotive design.
+ * A separate configurator experience using layered 2D images instead of Three.js.
+ * Shares the same Zustand store, types, pricing, and rules as the 3D configurator.
+ * Inspired by the Velocity Restorations configurator architecture.
  */
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { CartScene } from '../three/scene/CartScene';
-import { OptionSelector } from '../components/OptionSelectorBronco';
+import { ImageCompositor, ViewAngle } from '../components/ImageCompositor';
+import { AccordionOptionPanel } from '../components/AccordionOptionPanel';
+import { PackageSelector } from '../components/PackageSelector';
 import { MaterialSelector } from '../components/MaterialSelectorBronco';
 import { PricingSummary } from '../components/PricingSummaryBronco';
 import { PlatformSelector } from '../components/PlatformSelectorBronco';
+import { AnimatedPrice } from '../components/AnimatedPrice';
 import { useConfiguratorStore } from '../store/configurator';
 import { saveConfiguration } from '../api/client';
 import { colors, typography, spacing, borderRadius, shadows } from '../styles/broncoTheme';
 
-export function ConfiguratorPage() {
+type PanelMode = 'build' | 'colors' | 'summary';
+
+export function Configurator2DPage() {
   const navigate = useNavigate();
   const configuration = useConfiguratorStore(state => state.configuration);
-  const allMaterials = useConfiguratorStore(state => state.allMaterials);
-  const allOptions = useConfiguratorStore(state => state.allOptions);
-  const platform = useConfiguratorStore(state => state.platform);
   const pricing = useConfiguratorStore(state => state.pricing);
-  const [activePanel, setActivePanel] = useState<'build' | 'colors' | 'summary'>('build');
+  const [activePanel, setActivePanel] = useState<PanelMode>('build');
+  const [activeView, setActiveView] = useState<ViewAngle>('front');
   const [isSaving, setIsSaving] = useState(false);
+
+  const handleViewChange = useCallback((view: ViewAngle) => {
+    setActiveView(view);
+  }, []);
 
   const handleRequestQuote = async () => {
     if (!configuration) return;
-
     setIsSaving(true);
     try {
       await saveConfiguration(configuration);
@@ -45,10 +51,10 @@ export function ConfiguratorPage() {
     return (
       <div style={styles.loadingContainer}>
         <div style={styles.loadingContent}>
-          <img 
-            src="/assets/GG_circle_grill_full_color-01.png" 
-            alt="GG Logo" 
-            style={styles.loadingLogoImage} 
+          <img
+            src="/assets/GG_circle_grill_full_color-01.png"
+            alt="GG Logo"
+            style={styles.loadingLogoImage}
           />
           <h2 style={styles.loadingTitle}>LOADING YOUR BUILD</h2>
           <div style={styles.loadingBar}>
@@ -65,29 +71,29 @@ export function ConfiguratorPage() {
       <header style={styles.header}>
         <div style={styles.headerLeft}>
           <div style={styles.logoContainer}>
-            <img 
-              src="/assets/GG_circle_grill_full_color-01.png" 
-              alt="GG Logo" 
-              style={styles.logoImage} 
+            <img
+              src="/assets/GG_circle_grill_full_color-01.png"
+              alt="GG Logo"
+              style={styles.logoImage}
             />
             <div>
               <h1 style={styles.logoText}>BUILD YOUR RIDE</h1>
-              <span style={styles.logoSubtext}>Custom Cart Configurator</span>
+              <span style={styles.logoSubtext}>2D Configurator</span>
             </div>
           </div>
         </div>
-        
+
         <div style={styles.headerCenter}>
           {/* Navigation tabs */}
           <nav style={styles.nav}>
             {[
-              { id: 'build', label: 'BUILD', icon: '🔧' },
-              { id: 'colors', label: 'COLORS', icon: '🎨' },
-              { id: 'summary', label: 'SUMMARY', icon: '📋' },
+              { id: 'build' as PanelMode, label: 'BUILD', icon: '🔧' },
+              { id: 'colors' as PanelMode, label: 'COLORS', icon: '🎨' },
+              { id: 'summary' as PanelMode, label: 'SUMMARY', icon: '📋' },
             ].map((tab) => (
               <button
                 key={tab.id}
-                onClick={() => setActivePanel(tab.id as typeof activePanel)}
+                onClick={() => setActivePanel(tab.id)}
                 style={{
                   ...styles.navButton,
                   ...(activePanel === tab.id ? styles.navButtonActive : {}),
@@ -101,17 +107,15 @@ export function ConfiguratorPage() {
 
           {/* 3D/2D toggle */}
           <div style={styles.viewToggle}>
-            <span style={styles.viewToggleActive}>3D</span>
-            <Link to="/2d" style={styles.viewToggleLink}>2D</Link>
+            <Link to="/" style={styles.viewToggleLink}>3D</Link>
+            <span style={styles.viewToggleActive}>2D</span>
           </div>
         </div>
 
         <div style={styles.headerRight}>
           <div style={styles.priceTag}>
             <span style={styles.priceLabel}>YOUR BUILD</span>
-            <span style={styles.priceValue}>
-              ${pricing?.grandTotal?.toLocaleString() || '---'}
-            </span>
+            <AnimatedPrice value={pricing?.grandTotal || 0} />
           </div>
           <button
             onClick={handleRequestQuote}
@@ -129,43 +133,28 @@ export function ConfiguratorPage() {
 
       {/* Main content */}
       <div style={styles.main}>
-        {/* Left panel - Configuration options */}
+        {/* Left panel - Options */}
         <aside style={styles.sidebar}>
           <div style={styles.sidebarContent}>
             <PlatformSelector />
-            
-            {activePanel === 'build' && <OptionSelector />}
+
+            {activePanel === 'build' && (
+              <>
+                <PackageSelector />
+                <AccordionOptionPanel onViewChange={handleViewChange} />
+              </>
+            )}
             {activePanel === 'colors' && <MaterialSelector />}
             {activePanel === 'summary' && <PricingSummary />}
           </div>
         </aside>
 
-        {/* Center - 3D Viewport */}
+        {/* Center - 2D Image Compositor Viewport */}
         <main style={styles.viewport}>
-          <div style={styles.viewportInner}>
-            <CartScene 
-              configuration={configuration}
-              allMaterials={allMaterials}
-              allOptions={allOptions}
-              platform={platform}
-            />
-          </div>
-          
-          {/* Viewport controls overlay */}
-          <div style={styles.viewportControls}>
-            <div style={styles.viewportHint}>
-              <span>🖱️</span>
-              <span>Drag to rotate • Scroll to zoom</span>
-            </div>
-          </div>
-          
-          {/* Platform name badge */}
-          {platform && (
-            <div style={styles.platformBadge}>
-              <span style={styles.platformBadgeLabel}>PLATFORM</span>
-              <span style={styles.platformBadgeName}>{platform.name}</span>
-            </div>
-          )}
+          <ImageCompositor
+            activeView={activeView}
+            onViewChange={handleViewChange}
+          />
         </main>
       </div>
 
@@ -192,18 +181,13 @@ export function ConfiguratorPage() {
         </div>
       </footer>
 
-      {/* Google Font import for display font */}
+      {/* Google Font import */}
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
-        
+
         @keyframes loadingPulse {
           0%, 100% { width: 0%; }
           50% { width: 100%; }
-        }
-        
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </div>
@@ -220,7 +204,7 @@ const styles: Record<string, React.CSSProperties> = {
     color: colors.offWhite,
     overflow: 'hidden',
   },
-  
+
   // Loading state
   loadingContainer: {
     display: 'flex',
@@ -237,7 +221,6 @@ const styles: Record<string, React.CSSProperties> = {
     height: '64px',
     objectFit: 'contain',
     marginBottom: spacing.lg,
-    animation: 'spin 2s linear infinite',
   },
   loadingTitle: {
     fontFamily: typography.fontFamily.display,
@@ -287,7 +270,7 @@ const styles: Record<string, React.CSSProperties> = {
     justifyContent: 'flex-end',
     gap: spacing.lg,
   },
-  
+
   // Logo
   logoContainer: {
     display: 'flex',
@@ -384,12 +367,6 @@ const styles: Record<string, React.CSSProperties> = {
     letterSpacing: '1px',
     marginBottom: '2px',
   },
-  priceValue: {
-    fontFamily: typography.fontFamily.display,
-    fontSize: typography.sizes.h2,
-    color: colors.offWhite,
-    letterSpacing: '1px',
-  },
 
   // CTA Button
   ctaButton: {
@@ -432,51 +409,6 @@ const styles: Record<string, React.CSSProperties> = {
   viewport: {
     flex: 1,
     position: 'relative',
-    background: `radial-gradient(ellipse at center, ${colors.charcoal} 0%, ${colors.canvasBg} 100%)`,
-  },
-  viewportInner: {
-    position: 'absolute',
-    inset: 0,
-  },
-  viewportControls: {
-    position: 'absolute',
-    bottom: spacing.lg,
-    left: '50%',
-    transform: 'translateX(-50%)',
-  },
-  viewportHint: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: spacing.sm,
-    padding: `${spacing.sm} ${spacing.md}`,
-    background: `${colors.panelBg}CC`,
-    borderRadius: borderRadius.pill,
-    fontSize: typography.sizes.small,
-    color: colors.broncoSand,
-    backdropFilter: 'blur(8px)',
-  },
-  platformBadge: {
-    position: 'absolute',
-    top: spacing.lg,
-    left: spacing.lg,
-    padding: `${spacing.sm} ${spacing.md}`,
-    background: `${colors.panelBg}EE`,
-    borderRadius: borderRadius.md,
-    border: `1px solid ${colors.broncoOrange}40`,
-    backdropFilter: 'blur(8px)',
-  },
-  platformBadgeLabel: {
-    display: 'block',
-    fontSize: typography.sizes.tiny,
-    color: colors.broncoOrange,
-    letterSpacing: '1px',
-    marginBottom: '2px',
-  },
-  platformBadgeName: {
-    fontFamily: typography.fontFamily.display,
-    fontSize: typography.sizes.h3,
-    color: colors.offWhite,
-    letterSpacing: '1px',
   },
 
   // Footer
